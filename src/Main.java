@@ -40,7 +40,7 @@ public class Main {
                         menuChoice = 4; //I have 0 idea why, but not having this makes it loop, so yeah. *IT*
                     }
                     case 2 -> { //Gives version. TODO: Manually change this
-                        System.out.println("You are currently on version Alpha 0.1.2");
+                        System.out.println("You are currently on version Alpha 0.1.2.1 - Front Entrance WIP");
                         validChoice = true;
                         userStr = userChoiceStr(input);
                     }
@@ -48,7 +48,7 @@ public class Main {
                         //TODO: Update as you develop game
                         System.out.println(
                                 """
-                                        There aren't many controls, through the basic ones include
+                                        There aren't many controls, through the basic ones include (They are case-sensitive btw)
                                         - Forward
                                         - Backward
                                         - Inventory
@@ -113,6 +113,8 @@ public class Main {
         boolean gameRunning = true;
         String playerLocation = player.getLocation();
 
+        //Going to initialize all room objects as to not have them created every time as previous builds.
+
         //REMEMBER TO FUCKING UPDATE THE VARIABLE, YOU YES YOU FUTURE MYO
         while (gameRunning) {
             //Background, maybe replace with object elsewhere idk
@@ -123,17 +125,26 @@ public class Main {
                    The door opens without so much as a speck of resistance and throw yourself into the house.
                 """);
 
+            //Since its a while loop, remember to add
             switch (playerLocation) {
                 case "Front Entrance" -> {
                     Entrance roomOne = new Entrance();
-                    frontEntrance(in, roomOne, player); //TODO: finish implementation, *IT*
+                    playerLocation = frontEntrance(in, roomOne, player); //TODO: finish implementation, *IT*
                     System.out.println("\nTest Room 1 Complete\n");
                     gameRunning = false; //For test purposes, setting to false here, the logic in this entire switch statement might bite me in the ass later
                     }
-                case "Room 2" -> {System.out.println("Test Room 2");} //TODO: implement
+                case "Room 2" -> {        //TODO: implement
+                    Hallway1 roomTwo = new Hallway1();
+                    //playerLocation = frontHallway(in, roomTwo, player); //TODO implement using same methodology as front entrance, maybe move actions to Entrance.java rather than Main.java
+                    System.out.println("Test Room 2");
+                }
                 case "Room 3" -> {System.out.println("Test Room 3");} //TODO: implement
                 case "Room 4" -> {System.out.println("Test Room 4");} //TODO: implement
                 case "Room 5" -> {System.out.println("Test Room 5");} //TODO: implement
+                case "Quit" -> {
+                    System.out.println("Sorry to see you go, hope you can play again :)");
+                    gameRunning = false;
+                    break; } //TODO implement "Quit" checks at any time so that its a universally accepted command
                 default -> {
                     System.out.println("How did you even get this?");
                     throw new ArrayIndexOutOfBoundsException(); //TODO: make this make sense by switching userpos to 2D array. or whatever francisco has recommended
@@ -142,7 +153,7 @@ public class Main {
         }
     }
 
-    public static void frontEntrance(Scanner in, Entrance roomOne, PlayerData player) {
+    public static String frontEntrance(Scanner in, Entrance roomOne, PlayerData player) {
         //Commented to try out the object implementation
 //        System.out.println("""
 //                                    Almost as if you were transported to a victorian mansion,
@@ -156,35 +167,46 @@ public class Main {
         String choice = "";
         System.out.println(roomOne.getRoomDesc());
 
-        //This entire thing is probably eternally IT, uh check necesssity of the commented code later
+        //This entire thing is probably eternally IT, uh check necessity of the commented code later
         while (!(choice.equalsIgnoreCase("Forward"))) {
             if (!(choice.equals(""))) {
                 System.out.println(roomOne.getRoomDesc());
             }
             choice = userChoiceStr(in);
             switch (choice) {
-                //TODO: Inventory interactions
-                //TODO: Plant v Coat Rack Differentiation
+                case "Forward" -> {
+                    System.out.println("You go further into the house");
+                    String nextRoom = "Front Hallway";
+                    return nextRoom;
+                }
                 case "Interact" -> {
-                    roomOne.interaction();
+                    System.out.println("What would you like to interact with?");
+                    String objectInteraction = in.next();
+                    roomOne.interaction(objectInteraction);
+                    continue;
 //                    choice = userChoiceStr(in);
                 }
                 //TODO: Implement
-                case "Forward", "Left", "Right" -> {
+                case "Left", "Right" -> {
                     System.out.println("NYI");
+                    continue;
 //                    choice = userChoiceStr(in);
                 }
                 case "Backward" -> {    //DNT
                     System.out.println("It's raining outside, probably not a smart idea to go back outside.\n");
+                    continue;
 //                    choice = userChoiceStr(in);
                 }
+                //TODO: Inventory interactions
                  case "Inventory" -> {  //DNT
                     player.getInventory();
+                    continue;
 //                    choice = userChoiceStr(in);
                 }
                 case "Quit" -> {break;}   //DNT
                 default -> {              //DNT
                     System.out.println("Not a valid choice");
+                    continue;
 //                    choice = userChoiceStr(in);
                 }
             }
@@ -192,5 +214,6 @@ public class Main {
                 break;
             }
         }
+        return "Front Entrance";
     }
 }

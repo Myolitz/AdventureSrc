@@ -24,7 +24,7 @@ public class PlayerData {
 
     public void getInventory() { //Checks player inventory, accessible via commands
         if (inventory.isEmpty()) {
-            System.out.println("You got some picket lint...that's about it\n");
+            System.out.println("You got some pocket lint...that's about it\n");
         }
         else {
             for (int i = 0; i < inventory.size(); i++) {
