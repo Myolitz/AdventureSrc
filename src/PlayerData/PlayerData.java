@@ -10,6 +10,7 @@ public class PlayerData {
     public void defaultValues() {
         name = "none";
         inventory = new ArrayList<String>(); //Prohibits NullPointerException, ran by PlayerData.PlayerData
+        inventory.add("Coat");
         location = "Front Entrance";
     }
 
@@ -28,7 +29,7 @@ public class PlayerData {
         }
         else {
             for (int i = 0; i < inventory.size(); i++) {
-                System.out.println("Slot " + i + ": " + inventory.get(i));
+                System.out.println("Slot " + (i + 1) + ": " + inventory.get(i));
             }
         }
     }
@@ -42,6 +43,17 @@ public class PlayerData {
 
     public String outOfBounds() { //DNT, failsafe of sorts
         return "How did you get here?";
+    }
+
+    public void useItem(String item) {
+        for (int i = 0; i < inventory.size(); i++) {
+            if (item.equals(inventory.get(i))) {
+                inventory.remove(i);
+            }
+            else {
+                continue;
+            }
+        }
     }
 
 }

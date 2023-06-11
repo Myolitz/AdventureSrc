@@ -1,4 +1,5 @@
 package RoomData;
+import PlayerData.*;
 
 public class Entrance {
     private String name;
@@ -49,12 +50,16 @@ public class Entrance {
     }
 
     //TODO: Make separate interactions for plant and rack
-    public void interaction(String object) {
+    public void interaction(String object, PlayerData Player) {
         String str;
         //Use system below on other interact-able objects down the line, its simple, though might require more interacted boolean vars :)
         if (object.equalsIgnoreCase("Rack")) {
             if (!rackInteraction) {
-                System.out.println("It certainly is a coat rack");
+                System.out.println("""
+                        You hang your coat on the rack, hearing a loud "click" come from further in the house...
+                                        Well at least you can stop wearing that wet coat...
+                        """);
+                Player.useItem("Coat");
                 rackInteraction = true;
                 setRoomDesc(rackInteraction, plantInteraction);
             }
