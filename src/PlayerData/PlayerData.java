@@ -6,6 +6,7 @@ public class PlayerData {
     private String name;
     private ArrayList<String> inventory;
     private String location;
+    private boolean wet = true;
 
     public void defaultValues() {
         name = "none";
@@ -37,12 +38,19 @@ public class PlayerData {
         return location;
     } //TODO: Francisco shenanigans, go bug him :troll:
 
-    public void setLocation(String newLocation) {
-        this.location = newLocation;
-    }
+    //Using location within the giant "while" loop for having the game run :thonk: check possible redundancy
+//    public void setLocation(String newLocation) {
+//        this.location = newLocation;
+//    }
 
     public String outOfBounds() { //DNT, failsafe of sorts
         return "How did you get here?";
+    }
+
+    public boolean isWet() { return wet; }
+
+    public void addItem(String item) {
+        inventory.add(item);
     }
 
     public void useItem(String item) {

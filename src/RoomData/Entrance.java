@@ -48,8 +48,6 @@ public class Entrance {
                 """;
         }
     }
-
-    //TODO: Make separate interactions for plant and rack
     public void interaction(String object, PlayerData Player) {
         String str;
         //Use system below on other interact-able objects down the line, its simple, though might require more interacted boolean vars :)
@@ -58,6 +56,7 @@ public class Entrance {
                 System.out.println("""
                         You hang your coat on the rack, hearing a loud "click" come from further in the house...
                                         Well at least you can stop wearing that wet coat...
+                                                    Inventory: -1 Coat
                         """);
                 Player.useItem("Coat");
                 rackInteraction = true;
@@ -69,16 +68,20 @@ public class Entrance {
         }
         else if (object.equalsIgnoreCase("Plant")) {
             if (!plantInteraction) {
-                System.out.println("It's a fucking plant");
-                this.plantInteraction = true;
-                setRoomDesc(rackInteraction, plantInteraction);
+                if (!(Player.isWet())) { //FIXME properly implement once the "endless" hallway portion is done
+                    System.out.println("You notice something hiding in between the dead leaves and dig it up.\n You found a small iron key");
+                    Player.addItem("Iron Key");
+                    this.plantInteraction = true;
+                    setRoomDesc(rackInteraction, plantInteraction);
+                }
+                else if (Player.isWet()) {
+                    System.out.println("Probably not the best idea to mess with dirt while wet");
+                }
             }
             else {
                 System.out.println("You've already searched this\n");
             }
         }
-
-
     }
 
 

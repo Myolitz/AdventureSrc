@@ -3,6 +3,7 @@
  * DNT = DO NOT TOUCH (aka its working as intended)
  * NYI = Not yet implemented
  * IT = In Testing
+ * PI = Partially Implemented
  **/
 
 import PlayerData.PlayerData;
@@ -18,10 +19,12 @@ public class Main {
         int menuChoice = userChoice(input);
         boolean validChoice = false;
         boolean gameStart = false;
+        boolean gameEnd = false;
         String userStr = "";
 
-        //Keeps you in the menu as long as you haven't selected the "play" option
-        while (!gameStart) {
+        //Keeps you in the menu as long as you haven't selected the "play" or "quit" options
+        //Added the gameEnd thing cause having '4' be your choice wouldn't exit the program *IT*
+        while (!gameStart && !gameEnd) {
         //Ensures one of 4 choices, supports "Back" command
             while (!validChoice || (userStr.equalsIgnoreCase("Back") || !(menuChoice == 4))) {
                 if (userStr.equalsIgnoreCase("Back")) {
@@ -40,7 +43,7 @@ public class Main {
                         menuChoice = 4; //I have 0 idea why, but not having this makes it loop, so yeah. *IT*
                     }
                     case 2 -> { //Gives version. TODO: Manually change this
-                        System.out.println("You are currently on version Alpha 0.1.2.2 - Front Entrance Final Touches");
+                        System.out.println("You are currently on version Alpha 0.2 - Front Entrance Done");
                         validChoice = true;
                         userStr = userChoiceStr(input);
                     }
@@ -55,15 +58,17 @@ public class Main {
                                         - Interact
                                         - Back, to back out of menus like this one
                                         - Location
-                                        - You can type 'Quit' at any given type to exit the game once you start (NYI)
-                                        - Left/Right (Partially implemented)"""
+                                        - You can type 'Quit' at any given type to exit the game once you start (PI)
+                                        - Left/Right (PI)"""
                         );
                         validChoice = true;
                         userStr = userChoiceStr(input);
                     }
                     case 4 -> { //Quit
-                        System.out.println("Hope you'll come play again!");
                         validChoice = true;
+                        gameEnd = true;
+                        System.out.println("Hope you'll come play again!");
+                        userStr = "Quit";
                     }
                     default -> {
                         System.out.println("Oops, that's not an option!");
@@ -117,7 +122,6 @@ public class Main {
         //Probably prevented some bugs with interactions
         Entrance roomOne = new Entrance();
         FrontHallway roomTwo = new FrontHallway();
-
 
 
         //REMEMBER TO FUCKING UPDATE THE VARIABLE, YOU YES YOU FUTURE MYO
@@ -193,8 +197,8 @@ public class Main {
                 }
                 case "Right" -> {
                     System.out.println("""
-                                A seemingly endless hallway is now before you, you dare not go into it.
-                                        (Yes its NYI, but dw come back later ;))
+                                        A seemingly endless hallway is now before you, you dare not go into it.
+                                                    (Yes its NYI, but dw come back later ;))
                             """);
 
 //                    choice = userChoiceStr(in);
@@ -211,7 +215,7 @@ public class Main {
                     System.out.println("It's raining outside, probably not a smart idea to go back outside.\n");
 //                    choice = userChoiceStr(in);
                 }
-                //TODO: Inventory interactions
+                //TODO: Inventory interactions (keeping this here now that room 1 is done JUST as a reminder in case I add shit that would require "global" item use
                  case "Inventory" -> {  //DNT
                     player.getInventory();
 //                    choice = userChoiceStr(in);
