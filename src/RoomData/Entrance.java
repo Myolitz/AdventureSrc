@@ -54,7 +54,7 @@ public class Entrance {
         if (object.equalsIgnoreCase("Rack")) {
             if (!rackInteraction) {
                 System.out.println("""
-                        You hang your coat on the rack, hearing a loud "click" come from further in the house...
+                        You hang your coat on the rack, hearing a loud "click" come from further in the house.
                                         Well at least you can stop wearing that wet coat...
                                                     Inventory: -1 Coat
                         """);
@@ -68,14 +68,15 @@ public class Entrance {
         }
         else if (object.equalsIgnoreCase("Plant")) {
             if (!plantInteraction) {
-                if (!(Player.isWet())) { //FIXME properly implement once the "endless" hallway portion is done
+                //Adding temporary "gameplay" for once you get an equally temporary towel and key you get from the back hallway (you use this iron key to finish the game).
+                if (!Player.isWet()) { //FIXME properly implement once the "endless" hallway portion is done
                     System.out.println("You notice something hiding in between the dead leaves and dig it up.\n You found a small iron key");
                     Player.addItem("Iron Key");
                     this.plantInteraction = true;
                     setRoomDesc(rackInteraction, plantInteraction);
                 }
                 else if (Player.isWet()) {
-                    System.out.println("Probably not the best idea to mess with dirt while wet");
+                    System.out.println("Probably not the best idea to mess with dirt while wet.\n");
                 }
             }
             else {
@@ -83,7 +84,8 @@ public class Entrance {
             }
         }
     }
-
-
+    public String getRoomName() {
+        return name;
+    }
 
 }

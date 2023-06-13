@@ -43,7 +43,7 @@ public class Main {
                         menuChoice = 4; //I have 0 idea why, but not having this makes it loop, so yeah. *IT*
                     }
                     case 2 -> { //Gives version. TODO: Manually change this
-                        System.out.println("You are currently on version Alpha 0.2 - Front Entrance Done");
+                        System.out.println("You are currently on version Alpha 0.2.1 - Front Hallway WIP");
                         validChoice = true;
                         userStr = userChoiceStr(input);
                     }
@@ -59,7 +59,8 @@ public class Main {
                                         - Back, to back out of menus like this one
                                         - Location
                                         - You can type 'Quit' at any given type to exit the game once you start (PI)
-                                        - Left/Right (PI)"""
+                                        - Left/Right (PI @ room1 & room2)
+                                        - Use (PI)"""
                         );
                         validChoice = true;
                         userStr = userChoiceStr(input);
@@ -123,38 +124,46 @@ public class Main {
         Entrance roomOne = new Entrance();
         FrontHallway roomTwo = new FrontHallway();
 
+        //For reference, this is map layout if you're looking over this code
+        /* n = null, r = room, i = implemented
+         * n n r r n
+         * r n r n n
+         * r r r n n
+         * r n i n r
+         * n r i r r
+         */
 
-        //REMEMBER TO FUCKING UPDATE THE VARIABLE, YOU YES YOU FUTURE MYO
-        while (gameRunning) {
-            //Background, maybe replace with object elsewhere idk
-            System.out.println("""
+        //Background, maybe replace with object elsewhere idk
+        //Moved outside the while loop to not have it print every time I tried quitting mid-game
+        System.out.println("""
                             You had no idea where you were going after a night of drinking.
                                     Was it even your house that you stumbled upon?
                 A feeling of uneasiness washes over, but with it raining you disregard the possible concerns.
                    The door opens without so much as a speck of resistance and throw yourself into the house.
                 """);
 
-            //Since its a while loop, remember to add
-            switch (playerLocation) {
+        //REMEMBER TO FUCKING UPDATE THE VARIABLE, YOU YES YOU FUTURE MYO
+        while (gameRunning) {
+            //Since its a while loop, remember to add gameRunning changes
+            //The logic in this entire switch statement might bite me in the ass later
+            switch (playerLocation) { //DNT UNLESS ADDING ROOMS, INTER-ROOM TRANSITIONS WORK AS INTENDED
                 case "Front Entrance" -> {
-//                    Entrance roomOne = new Entrance();
-                    playerLocation = frontEntrance(in, roomOne, player); //TODO: finish implementation, *IT*
-                    System.out.println("\nTest Room 1 Complete\n");
-                    //gameRunning = false; //For test purposes, setting to false here, the logic in this entire switch statement might bite me in the ass later
+                    playerLocation = frontEntrance(in, roomOne, player); //IT indefinitely, check for bugs along the way or ask friends to QA for you lol
+                    System.out.println("\nTest Room 1 Complete\n"); //
+                    //gameRunning = false; //For test purposes, setting to false here
                     }
-                case "Front Hallway" -> {        //TODO: implement
-//                    Hallway1 roomTwo = new Hallway1();
+                case "Front Hallway" -> {    //TODO: finish puzzle implementation + RE reference
                     playerLocation = frontHallway(in, roomTwo, player); //TODO implement using same methodology as front entrance, maybe move actions to the room classes rather than Main.java
-                    System.out.println("Test Room 2");
+                    System.out.println("Test Room 2 Complete");
                     gameRunning = false; //See line below "Test room 1 complete" block
                 }
-                case "Room 3" -> {System.out.println("Test Room 3");} //TODO: implement
+                case "Center Hallway" -> {System.out.println("Test Room 3");} //TODO: implement
                 case "Room 4" -> {System.out.println("Test Room 4");} //TODO: implement
                 case "Room 5" -> {System.out.println("Test Room 5");} //TODO: implement
                 case "Quit" -> {
                     System.out.println("Sorry to see you go, hope you can play again :)");
                     gameRunning = false;
-                    break; } //TODO implement "Quit" checks at any time so that its a universally accepted command
+                } //TODO implement "Quit" checks at any time so that its a universally accepted command
                 default -> {
                     System.out.println("How did you even get this?");
                     throw new ArrayIndexOutOfBoundsException(); //TODO: make this make sense by switching userpos to 2D array. or whatever francisco has recommended <-- don't do this bullshit please ;-;
@@ -164,16 +173,9 @@ public class Main {
     }
 
     public static String frontEntrance(Scanner in, Entrance roomOne, PlayerData player) {
-        //Commented to try out the object implementation
-//        System.out.println("""
-//                                    Almost as if you were transported to a victorian mansion,
-//                            you are hit with an immediate sense of luxury, are you meant to be here?
-//
-//                     Intricate patterns line the wall, opening up to a hallway straight head, past a potted plant
-//                and a coat rack that towers over you, leaving you wondering how one is supposed to hang their coat on it.
-//                """);
+        //Removed giant fucking comment block, object worked as intended
 
-        //Nested while loops lets fucking GOOOOOOOOOOOOOOOO
+        //Nested while loops lets fucking GOOOOOOOOOOOOOOOO (forgot what this was even bout lol, keeping comment cause why not)
         String choice = "";
         System.out.println(roomOne.getRoomDesc());
 
@@ -192,49 +194,99 @@ public class Main {
                     System.out.println("What would you like to interact with?");
                     String objectInteraction = in.next();
                     roomOne.interaction(objectInteraction, player);
-                    continue;
-//                    choice = userChoiceStr(in);
                 }
                 case "Right" -> {
                     System.out.println("""
                                         A seemingly endless hallway is now before you, you dare not go into it.
                                                     (Yes its NYI, but dw come back later ;))
                             """);
-
-//                    choice = userChoiceStr(in);
                 }
                 case "Left" -> {
                     System.out.println("""
                                                  You enter a lavishly designed office space.
                                     Simply entering the room makes your head hurt due to how shiny everything is.
-                                         Better not touch anything and try to get out of this house
+                                          Better not touch anything and try to get out of this house
                             """);
-
                 }
                 case "Backward" -> {    //DNT
                     System.out.println("It's raining outside, probably not a smart idea to go back outside.\n");
-//                    choice = userChoiceStr(in);
                 }
-                //TODO: Inventory interactions (keeping this here now that room 1 is done JUST as a reminder in case I add shit that would require "global" item use
+                //TODO: Re-check in case "global" item use is implemented later
                  case "Inventory" -> {  //DNT
                     player.getInventory();
-//                    choice = userChoiceStr(in);
                 }
                 case "Quit" -> {       //DNT
                     return "Quit";
                 }
+                case "Location" -> {
+                    System.out.println(player.getLocation());
+                }
                 default -> {              //DNT
                     System.out.println("Not a valid choice");
-//                    choice = userChoiceStr(in);
                 }
             }
         }
         return "Front Entrance";
     }
 
-    public static String frontHallway(Scanner in, FrontHallway roomTwo, PlayerData Player) {
-        System.out.println("Room Two is now accessible and ready to build");
-        return  "Front Entrance";
+    public static String frontHallway(Scanner in, FrontHallway roomTwo, PlayerData player) {
+
+//        System.out.println("Room Two is now accessible and ready to build");
+//        System.out.println("Begin test session");
+
+        System.out.println(roomTwo.getRoomDesc());
+
+        String choice = "";
+
+        while (!(choice.equalsIgnoreCase("Forward"))) {
+            if (!(choice.equals(""))) {
+                System.out.println(roomTwo.getRoomDesc());
+            }
+            choice = userChoiceStr(in);
+            switch (choice) {
+                case "Forward" -> {
+                    System.out.println("You go further into the heart of the house.");
+                    return "Center Hallway";
+                }
+                case "Interact" -> {
+                    System.out.println("What would you like to interact with?");
+                    String objectInteraction = in.next();
+                    roomTwo.interaction(objectInteraction, player, in);
+                    continue;
+                }
+                case "Right" -> {
+                    System.out.println("""
+                                             The desk with the typewriter blocks your path.
+                               Though considering there's a wall behind them, not sure what the plan was.
+                            """);
+
+                }
+                case "Left" -> {
+                    System.out.println("""
+                            Seeing as the paintings are hung on the wall, walking towards the wall would yield no results
+                            """);
+
+                }
+                case "Backward" -> {    //DNT
+                    System.out.println("Maybe you missed something in the entrance, lets go back and check.\n");
+                    return "Front Entrance";
+                }
+                //TODO: Inventory interactions (keeping this here now that room 1 is done JUST as a reminder in case I add shit that would require "global" item use
+                case "Inventory" -> {  //DNT
+                    player.getInventory();
+                }
+                case "Quit" -> {       //DNT
+                    return "Quit";
+                }
+                case "Location" -> {
+                    System.out.println(player.getLocation());
+                }
+                default -> {              //DNT
+                    System.out.println("Not a valid choice");
+                }
+            }
+        }
+        return  "Front Hallway";
     }
 
 

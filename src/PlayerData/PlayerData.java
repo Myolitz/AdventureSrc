@@ -64,4 +64,17 @@ public class PlayerData {
         }
     }
 
+    public boolean hasItem(String item) {
+        boolean available = false;
+
+        for (int i = 0; i < inventory.size(); i++) {
+            if (item.equalsIgnoreCase(inventory.get(i))) {
+                available = true;
+                break;
+            }
+        }
+
+        return available;
+    }
+
 }
