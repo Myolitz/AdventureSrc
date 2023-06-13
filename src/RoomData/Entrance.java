@@ -85,7 +85,7 @@ public class Entrance {
         }
     }
     public String getRoomName() {
-        return name;
+        return this.name;
     }
 
 }

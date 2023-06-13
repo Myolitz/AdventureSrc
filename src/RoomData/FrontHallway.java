@@ -74,7 +74,7 @@ public class FrontHallway {
             }
             else if (action.equalsIgnoreCase("Back")) {
                 System.out.println("""
-                                        You can check the drawer again later""");
+                                        You can check the drawer again later\n""");
             }
         }
         else if (object.equalsIgnoreCase("Typewriter")) {
@@ -118,6 +118,22 @@ public class FrontHallway {
     }
     public String getRoomDesc() {
         return this.description;
+    }
+
+    public String getRoomName() {
+        return this.name;
+    }
+
+    public void setRoomDesc() {
+        if (!typeWriterInteraction && drawerInteraction){
+           System.out.println("Option 1");
+        }
+        else if (typeWriterInteraction && !drawerInteraction) {
+            System.out.println("Option 2");
+        }
+        else if (typeWriterInteraction && drawerInteraction) {
+            System.out.println("Option 3");
+        }
     }
 
 }

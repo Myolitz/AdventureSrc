@@ -43,7 +43,7 @@ public class Main {
                         menuChoice = 4; //I have 0 idea why, but not having this makes it loop, so yeah. *IT*
                     }
                     case 2 -> { //Gives version. TODO: Manually change this
-                        System.out.println("You are currently on version Alpha 0.2.1 - Front Hallway WIP");
+                        System.out.println("You are currently on version Alpha 0.3 - Front Hallway Done (Puzzles/Solutions NYI)");
                         validChoice = true;
                         userStr = userChoiceStr(input);
                     }
@@ -133,7 +133,7 @@ public class Main {
          * n r i r r
          */
 
-        //Background, maybe replace with object elsewhere idk
+        //Background, maybe replace with object elsewhere (Game class? maybe for stuff like game.printMenu() n stuff)
         //Moved outside the while loop to not have it print every time I tried quitting mid-game
         System.out.println("""
                             You had no idea where you were going after a night of drinking.
@@ -149,7 +149,7 @@ public class Main {
             switch (playerLocation) { //DNT UNLESS ADDING ROOMS, INTER-ROOM TRANSITIONS WORK AS INTENDED
                 case "Front Entrance" -> {
                     playerLocation = frontEntrance(in, roomOne, player); //IT indefinitely, check for bugs along the way or ask friends to QA for you lol
-                    System.out.println("\nTest Room 1 Complete\n"); //
+                    //System.out.println("\nTest Room 1 Complete\n"); //Room 1 Complete so commented
                     //gameRunning = false; //For test purposes, setting to false here
                     }
                 case "Front Hallway" -> {    //TODO: finish puzzle implementation + RE reference
@@ -178,6 +178,7 @@ public class Main {
         //Nested while loops lets fucking GOOOOOOOOOOOOOOOO (forgot what this was even bout lol, keeping comment cause why not)
         String choice = "";
         System.out.println(roomOne.getRoomDesc());
+        player.setLocation(roomOne.getRoomName());
 
         //This entire thing is probably eternally IT, uh check necessity of the commented code later
         while (!(choice.equalsIgnoreCase("Forward"))) {
@@ -187,7 +188,9 @@ public class Main {
             choice = userChoiceStr(in);
             switch (choice) {
                 case "Forward" -> {
-                    System.out.println("You go further into the house");
+                    System.out.println("""
+                                                           You go further into the house
+                            """            );
                     return "Front Hallway";
                 }
                 case "Interact" -> {
@@ -235,6 +238,7 @@ public class Main {
 //        System.out.println("Begin test session");
 
         System.out.println(roomTwo.getRoomDesc());
+        player.setLocation(roomTwo.getRoomName());
 
         String choice = "";
 
@@ -252,7 +256,6 @@ public class Main {
                     System.out.println("What would you like to interact with?");
                     String objectInteraction = in.next();
                     roomTwo.interaction(objectInteraction, player, in);
-                    continue;
                 }
                 case "Right" -> {
                     System.out.println("""
@@ -263,7 +266,8 @@ public class Main {
                 }
                 case "Left" -> {
                     System.out.println("""
-                            Seeing as the paintings are hung on the wall, walking towards the wall would yield no results
+                            Seeing as the paintings are hung on the wall, walking towards the wall would yield
+                                                    nothing but a face-full of wall
                             """);
 
                 }

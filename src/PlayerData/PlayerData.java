@@ -77,4 +77,8 @@ public class PlayerData {
         return available;
     }
 
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
 }
