@@ -17,6 +17,8 @@ public class FrontHallway {
                 Going further into the house you are now in a quaint little hallway, adorned with some paintings.
                  On the opposite wall you see a nice little desk with two drawers and a typewriter on top of it.
                                   How old must this place be if typewriters are still in use?""";
+        this.typeWriterInteraction = false;
+        this.drawerInteraction = false;
     }
 
     public void interaction(String object, PlayerData player, Scanner in) {
@@ -49,6 +51,7 @@ public class FrontHallway {
                                                                                     You found a [Handle]!
                                             """);
                                     player.addItem("Handle");
+                                    drawerInteraction = true;
                                     validChoice = true;
                                 }
                                 case "N" -> {
@@ -93,6 +96,7 @@ public class FrontHallway {
                                    The safe haven in the midst of the horrors dwelling inside the spencer mansion.
                                            What ever did happen to Chris and Jill you wonder...
                             """);
+                            typewriterInteraction = true;
                             validChoice = true;
                         }
                         case "N" -> {
@@ -109,7 +113,7 @@ public class FrontHallway {
             //Indent later once easter egg implemented TODO put ink ribbon @ room right of exit (name it "Back Corner" or something lol)
             System.out.println("""
                                        Quite nostalgic seeing a mint condition type-writer.
-                              It reminds you of a safe haven...now if only you had an ink ribbon.
+                                                 If only you had an ink ribbon.
                     """);
             // }
         }

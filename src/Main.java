@@ -4,6 +4,14 @@
  * NYI = Not yet implemented
  * IT = In Testing
  * PI = Partially Implemented
+ * -------------------------------------
+ * Ideas for future:
+ * player orientation affecting left/right prompts
+ * switching to interfaces for movement or something similar
+ * switching the "straight" paths (think front entrance - back entrance) to linked lists
+ * -------------------------------------
+ * TODO:
+ * Clean up main.java (ik its using generally "basic" things but jfc) <- also part of why I want to switch to not using switches for everything lol
  **/
 
 import PlayerData.PlayerData;
@@ -43,7 +51,7 @@ public class Main {
                         menuChoice = 4; //I have 0 idea why, but not having this makes it loop, so yeah. *IT*
                     }
                     case 2 -> { //Gives version. TODO: Manually change this
-                        System.out.println("You are currently on version Alpha 0.3 - Front Hallway Done (Puzzles/Solutions NYI)");
+                        System.out.println("You are currently on version Alpha 0.4 - Central Hallway Finished");
                         validChoice = true;
                         userStr = userChoiceStr(input);
                     }
@@ -98,7 +106,7 @@ public class Main {
         }
     }
 
-
+    //Might delete these 2 as I don't seem to call upon them like at all lmao (rewrite the input code for shit if swapping to this long-term)
     public static int userChoice(Scanner in) {
         return in.nextInt();
     }
@@ -123,6 +131,7 @@ public class Main {
         //Probably prevented some bugs with interactions
         Entrance roomOne = new Entrance();
         FrontHallway roomTwo = new FrontHallway();
+        CenterHallway roomThree = new CenterHallway();
 
         //For reference, this is map layout if you're looking over this code
         /* n = null, r = room, i = implemented
@@ -132,7 +141,7 @@ public class Main {
          * r n i n r
          * n r i r r
          */
-
+        //TODO maybe move actions to the room classes rather than Main.java to de-clog
         //Background, maybe replace with object elsewhere (Game class? maybe for stuff like game.printMenu() n stuff)
         //Moved outside the while loop to not have it print every time I tried quitting mid-game
         System.out.println("""
@@ -144,20 +153,24 @@ public class Main {
 
         //REMEMBER TO FUCKING UPDATE THE VARIABLE, YOU YES YOU FUTURE MYO
         while (gameRunning) {
-            //Since its a while loop, remember to add gameRunning changes
             //The logic in this entire switch statement might bite me in the ass later
+            //All commented gameRunning  = false statements are to test, remove later
             switch (playerLocation) { //DNT UNLESS ADDING ROOMS, INTER-ROOM TRANSITIONS WORK AS INTENDED
                 case "Front Entrance" -> {
                     playerLocation = frontEntrance(in, roomOne, player); //IT indefinitely, check for bugs along the way or ask friends to QA for you lol
                     //System.out.println("\nTest Room 1 Complete\n"); //Room 1 Complete so commented
-                    //gameRunning = false; //For test purposes, setting to false here
+                    //gameRunning = false;
                     }
-                case "Front Hallway" -> {    //TODO: finish puzzle implementation + RE reference
-                    playerLocation = frontHallway(in, roomTwo, player); //TODO implement using same methodology as front entrance, maybe move actions to the room classes rather than Main.java
-                    System.out.println("Test Room 2 Complete");
-                    gameRunning = false; //See line below "Test room 1 complete" block
+                case "Front Hallway" -> {    //TODO: finish puzzle implementation once rest of rooms are done
+                    playerLocation = frontHallway(in, roomTwo, player);
+                    //System.out.println("Test Room 2 Complete");
+                    //gameRunning = false;
                 }
-                case "Center Hallway" -> {System.out.println("Test Room 3");} //TODO: implement
+                case "Center Hallway" -> { //TODO: add "left" functionality later @see map.blend or ASCII above
+                    playerLocation = centerHallway(in, roomThree, player);
+                    System.out.println("Test Room 3");
+                    gameRunning = false;
+                }
                 case "Room 4" -> {System.out.println("Test Room 4");} //TODO: implement
                 case "Room 5" -> {System.out.println("Test Room 5");} //TODO: implement
                 case "Quit" -> {
@@ -166,7 +179,8 @@ public class Main {
                 } //TODO implement "Quit" checks at any time so that its a universally accepted command
                 default -> {
                     System.out.println("How did you even get this?");
-                    throw new ArrayIndexOutOfBoundsException(); //TODO: make this make sense by switching userpos to 2D array. or whatever francisco has recommended <-- don't do this bullshit please ;-;
+                    throw new ArrayIndexOutOfBoundsException(); //TODO: make this make sense by switching userpos to 2D array. or whatever francisco has recommended
+                    //DO NOT DO THE 2D ARRAY BULLSHIT PLEASE FOR THE LOVE OF GOD DO A LINKED LIST OR SMTH
                 }
             }
         }
@@ -190,7 +204,7 @@ public class Main {
                 case "Forward" -> {
                     System.out.println("""
                                                            You go further into the house
-                            """            );
+                            """);
                     return "Front Hallway";
                 }
                 case "Interact" -> {
@@ -249,7 +263,9 @@ public class Main {
             choice = userChoiceStr(in);
             switch (choice) {
                 case "Forward" -> {
-                    System.out.println("You go further into the heart of the house.");
+                    System.out.println("""
+                                                           You go further into the house
+                            """);
                     return "Center Hallway";
                 }
                 case "Interact" -> {
@@ -293,5 +309,64 @@ public class Main {
         return  "Front Hallway";
     }
 
+    private static String centerHallway(Scanner in, CenterHallway roomThree, PlayerData player) {
+
+        //YOLO-ing the last couple of rooms probably cause I've been kinda lazy on actually dev-ing lol
+        //Probably going to be releasing them a lot faster since its just copy-pasting
+
+        System.out.println(roomThree.getRoomDesc());
+        player.setLocation(roomThree.getRoomName());
+
+        String choice = "";
+
+        while (!(choice.equalsIgnoreCase("Forward"))) {
+            if (!(choice.equals(""))) {
+                System.out.println(roomThree.getRoomDesc());
+            }
+            choice = userChoiceStr(in);
+            switch (choice) {
+                case "Forward" -> {
+                    System.out.println("You go towards the back of the house.");
+                    return "Back Hallway";
+                }
+                case "Interact" -> {
+                    System.out.println("What would you like to interact with?");
+                    String objectInteraction = in.next();
+                    roomThree.interaction(objectInteraction, player);
+                }
+                case "Right" -> {
+                    System.out.println("""
+                                             There sits a couch blocking your path.
+                               Though considering there's a wall behind it, not sure what the plan was.
+                            """);
+
+                }
+                case "Left" -> {
+                    System.out.println("""
+                                    There is a path branching to the left though best to not dilly-dally.
+                            """);
+
+                }
+                case "Backward" -> {    //DNT
+                    System.out.println("                Might've missed something back there...\n");
+                    return "Front Hallway";
+                }
+                //TODO: Inventory interactions (keeping this here now that room 1 is done JUST as a reminder in case I add shit that would require "global" item use
+                case "Inventory" -> {  //DNT
+                    player.getInventory();
+                }
+                case "Quit" -> {       //DNT
+                    return "Quit";
+                }
+                case "Location" -> {
+                    System.out.println(player.getLocation());
+                }
+                default -> {              //DNT
+                    System.out.println("Not a valid choice");
+                }
+            }
+        }
+        return "Center Hallway";
+    }
 
 }
