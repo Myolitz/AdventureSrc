@@ -6,10 +6,12 @@ public class PlayerData {
     private String name;
     private ArrayList<String> inventory;
     private String location;
+    private boolean wet = true;
 
     public void defaultValues() {
         name = "none";
         inventory = new ArrayList<String>(); //Prohibits NullPointerException, ran by PlayerData.PlayerData
+        inventory.add("Coat");
         location = "Front Entrance";
     }
 
@@ -24,24 +26,73 @@ public class PlayerData {
 
     public void getInventory() { //Checks player inventory, accessible via commands
         if (inventory.isEmpty()) {
-            System.out.println("You got some picket lint...that's about it\n");
+            System.out.println("You got some pocket lint...that's about it\n");
         }
         else {
             for (int i = 0; i < inventory.size(); i++) {
-                System.out.println("Slot " + i + ": " + inventory.get(i));
+                System.out.println("Slot " + (i + 1) + ": " + inventory.get(i));
             }
+            System.out.println();
         }
     }
     public String getLocation() {
         return location;
     } //TODO: Francisco shenanigans, go bug him :troll:
 
-    public void setLocation(String newLocation) {
-        this.location = newLocation;
-    }
+    //Using location within the giant "while" loop for having the game run :thonk: check possible redundancy
+//    public void setLocation(String newLocation) {
+//        this.location = newLocation;
+//    }
 
     public String outOfBounds() { //DNT, failsafe of sorts
         return "How did you get here?";
+    }
+
+    public boolean isWet() { return wet; }
+
+    public void addItem(String item) {
+        inventory.add(item);
+    }
+
+    public void useItem(String item) {
+        for (int i = 0; i < inventory.size(); i++) {
+            if (item.equals(inventory.get(i))) {
+                inventory.remove(i);
+            }
+        }
+    }
+
+    public void useItemGlobal(String item) {
+        for (int i = 0; i < inventory.size(); i++) {
+            if (item.equals(inventory.get(i))) {
+                switch (item) {
+                    case "Towel" -> {
+                        wet = false;
+                        System.out.println("                    Used [" + item + "]");
+                        inventory.remove(i);
+                    }
+                    case "Iron Key", "Rusted Key", "Coat", "Handle" -> {
+                        System.out.println("                    There is anything to use it on");
+                    }
+                }
+            }
+        }
+    }
+    public boolean hasItem(String item) {
+        boolean available = false;
+
+        for (int i = 0; i < inventory.size(); i++) {
+            if (item.equalsIgnoreCase(inventory.get(i))) {
+                available = true;
+                break;
+            }
+        }
+
+        return available;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
 }
