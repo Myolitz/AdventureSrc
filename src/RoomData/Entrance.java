@@ -13,7 +13,7 @@ public class Entrance {
         this.description = """
                       Almost as if you were transported to a Victorian mansion, you are hit with an immediate sense of luxury. 
                                                         Are you meant to be here?  
-                        Intricate patterns line the wall, opening up to a hallway straight head, past a wilted potted plant.
+                        Intricate patterns line the wall, opening up to a hallway straight ahead, past a wilted potted plant.
                 A coat rack opposite the plant towers over you, leaving you wondering how one is supposed to hang their coat on it.
                 """;
     }
@@ -26,21 +26,21 @@ public class Entrance {
         if (rackInteraction && !plantInteraction) {
             this.description = """
                  Almost as if you were transported to a Victorian mansion, you are hit with an immediate sense of luxury. 
-                   Intricate patterns line the wall, opening up to a hallway straight head, past a wilted potted plant.
+                   Intricate patterns line the wall, opening up to a hallway straight ahead, past a wilted potted plant.
                   A coat rack opposite the plant towers over you, now adorned with your wet coat, seems taller than ever.
                 """;
         }
         else if (!rackInteraction && plantInteraction) {
             this.description = """
                        Almost as if you were transported to a Victorian mansion, you are hit with an immediate sense of luxury. 
-                       Intricate patterns line the wall, opening up to a hallway straight head, past a now dug up potted plant.
+                       Intricate patterns line the wall, opening up to a hallway straight ahead, past a now dug up potted plant.
                 A coat rack opposite the plant towers over you, leaving you wondering how one is supposed to hang their coat on it.
                 """;
         }
         else if (rackInteraction && plantInteraction) {
             this.description = """
                    Almost as if you were transported to a Victorian mansion, you are hit with an immediate sense of luxury. 
-                     Intricate patterns line the wall, opening up to a hallway straight head, past a now dug up potted 
+                     Intricate patterns line the wall, opening up to a hallway straight ahead, past a now dug up potted 
                 plant and a coat rack that towers over you, now adorned with your wet coat, though it now seems taller than ever.
                 """;
         }
