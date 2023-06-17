@@ -51,7 +51,7 @@ public class Main {
                         menuChoice = 4; //I have 0 idea why, but not having this makes it loop, so yeah. *IT*
                     }
                     case 2 -> { //Gives version. TODO: Manually change this
-                        System.out.println("You are currently on version Alpha 0.4 - Central Hallway Finished");
+                        System.out.println("You are currently on version Alpha 0.5 - Back Hallway Done");
                         validChoice = true;
                         userStr = userChoiceStr(input);
                     }
@@ -132,6 +132,7 @@ public class Main {
         Entrance roomOne = new Entrance();
         FrontHallway roomTwo = new FrontHallway();
         CenterHallway roomThree = new CenterHallway();
+        BackHallway roomFour = new BackHallway();
 
         //For reference, this is map layout if you're looking over this code
         /* n = null, r = room, i = implemented
@@ -158,7 +159,7 @@ public class Main {
             switch (playerLocation) { //DNT UNLESS ADDING ROOMS, INTER-ROOM TRANSITIONS WORK AS INTENDED
                 case "Front Entrance" -> {
                     playerLocation = frontEntrance(in, roomOne, player); //IT indefinitely, check for bugs along the way or ask friends to QA for you lol
-                    //System.out.println("\nTest Room 1 Complete\n"); //Room 1 Complete so commented
+                    //System.out.println("\nTest Room 1 Complete\n");
                     //gameRunning = false;
                     }
                 case "Front Hallway" -> {    //TODO: finish puzzle implementation once rest of rooms are done
@@ -168,10 +169,14 @@ public class Main {
                 }
                 case "Center Hallway" -> { //TODO: add "left" functionality later @see map.blend or ASCII above
                     playerLocation = centerHallway(in, roomThree, player);
-                    System.out.println("Test Room 3");
-                    gameRunning = false;
+                    //System.out.println("Test Room 3 Complete");
+                    //gameRunning = false;
                 }
-                case "Room 4" -> {System.out.println("Test Room 4");} //TODO: implement
+                case "Back Hallway" -> {   //TODO: implement
+                    playerLocation = backHallway(in, roomFour, player);
+                    System.out.println("Test Room 4");
+                    //gameRunning = false;
+                }
                 case "Room 5" -> {System.out.println("Test Room 5");} //TODO: implement
                 case "Quit" -> {
                     System.out.println("Sorry to see you go, hope you can play again :)");
@@ -186,6 +191,7 @@ public class Main {
         }
     }
 
+    //This is Room 1 - The Entrance
     public static String frontEntrance(Scanner in, Entrance roomOne, PlayerData player) {
         //Removed giant fucking comment block, object worked as intended
 
@@ -232,6 +238,11 @@ public class Main {
                  case "Inventory" -> {  //DNT
                     player.getInventory();
                 }
+                case "Use" -> {
+                    System.out.println("What item would you like to use?");
+                    String object = in.next();
+                    player.useItemGlobal(object);
+                }
                 case "Quit" -> {       //DNT
                     return "Quit";
                 }
@@ -246,6 +257,8 @@ public class Main {
         return "Front Entrance";
     }
 
+
+    //This is room 2 - The Front Hallway
     public static String frontHallway(Scanner in, FrontHallway roomTwo, PlayerData player) {
 
 //        System.out.println("Room Two is now accessible and ready to build");
@@ -295,6 +308,11 @@ public class Main {
                 case "Inventory" -> {  //DNT
                     player.getInventory();
                 }
+                case "Use" -> {
+                    System.out.println("What item would you like to use?");
+                    String object = in.next();
+                    player.useItemGlobal(object);
+                }
                 case "Quit" -> {       //DNT
                     return "Quit";
                 }
@@ -309,7 +327,8 @@ public class Main {
         return  "Front Hallway";
     }
 
-    private static String centerHallway(Scanner in, CenterHallway roomThree, PlayerData player) {
+    //This is room 3 - The Center Hallway
+    public static String centerHallway(Scanner in, CenterHallway roomThree, PlayerData player) {
 
         //YOLO-ing the last couple of rooms probably cause I've been kinda lazy on actually dev-ing lol
         //Probably going to be releasing them a lot faster since its just copy-pasting
@@ -355,6 +374,78 @@ public class Main {
                 case "Inventory" -> {  //DNT
                     player.getInventory();
                 }
+                case "Use" -> {
+                    System.out.println("What item would you like to use?");
+                    String object = in.next();
+                    player.useItemGlobal(object);
+                }
+                case "Quit" -> {       //DNT
+                    return "Quit";
+                }
+
+                case "Location" -> {
+                    System.out.println(player.getLocation());
+                }
+                default -> {              //DNT
+                    System.out.println("Not a valid choice");
+                }
+            }
+        }
+        return "Center Hallway";
+    }
+
+    //This is room 4 - The Back Hallway
+    public static String backHallway(Scanner in, BackHallway roomFour, PlayerData player) {
+
+        //YOLO-ing the last couple of rooms probably cause I've been kinda lazy on actually dev-ing lol
+        //Probably going to be releasing them a lot faster since its just copy-pasting
+
+        System.out.println(roomFour.getRoomDesc());
+        player.setLocation(roomFour.getRoomName());
+
+        String choice = "";
+
+        while (!(choice.equalsIgnoreCase("Forward"))) {
+            if (!(choice.equals(""))) {
+                System.out.println(roomFour.getRoomDesc());
+            }
+            choice = userChoiceStr(in);
+            switch (choice) {
+                case "Forward" -> {
+                    System.out.println("You see a door up ahead");
+                    return "Back Entrance";
+                }
+                case "Interact" -> {
+                    System.out.println("What would you like to interact with?");
+                    String objectInteraction = in.next();
+                    roomFour.interaction(objectInteraction, player);
+                }
+                case "Right" -> {
+                    System.out.println("""
+                                                    There is a wall blocking your path.
+                            """);
+
+                }
+                case "Left" -> {
+                    System.out.println("""
+                                                    The mirror and desk block your path
+                                            Though they prevent you from getting a face-full of wall.
+                            """);
+
+                }
+                case "Backward" -> {    //DNT
+                    System.out.println("                    Man that couch was comfortable, let's head back\n");
+                    return "Center Hallway";
+                }
+                //TODO: Inventory interactions (keeping this here now that room 1 is done JUST as a reminder in case I add shit that would require "global" item use
+                case "Inventory" -> {  //DNT
+                    player.getInventory();
+                }
+                case "Use" -> {
+                    System.out.println("What item would you like to use?");
+                    String object = in.next();
+                    player.useItemGlobal(object);
+                }
                 case "Quit" -> {       //DNT
                     return "Quit";
                 }
@@ -366,7 +457,10 @@ public class Main {
                 }
             }
         }
-        return "Center Hallway";
+        return "Back Hallway";
     }
+
+    //TODO: Implement room 5 - The Back Entrance
+
 
 }

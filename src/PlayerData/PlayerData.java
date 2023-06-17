@@ -56,14 +56,28 @@ public class PlayerData {
     public void useItem(String item) {
         for (int i = 0; i < inventory.size(); i++) {
             if (item.equals(inventory.get(i))) {
+                System.out.println("Used [" + item + "]");
                 inventory.remove(i);
-            }
-            else {
-                continue;
             }
         }
     }
 
+    public void useItemGlobal(String item) {
+        for (int i = 0; i < inventory.size(); i++) {
+            if (item.equals(inventory.get(i))) {
+                switch (item) {
+                    case "Towel" -> {
+                        wet = false;
+                        System.out.println("Used [" + item + "]");
+                        inventory.remove(i);
+                    }
+                    case "Iron Key", "Rusted Key", "Coat", "Handle" -> {
+                        System.out.println("There is anything to use it on");
+                    }
+                }
+            }
+        }
+    }
     public boolean hasItem(String item) {
         boolean available = false;
 

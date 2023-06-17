@@ -35,7 +35,8 @@ public class FrontHallway {
             String action = in.next();
             if (action.equalsIgnoreCase("Use")) {
                 System.out.println("What item do you want to use?");
-                String item = in.next();
+//              String clearBuffer = in.next();
+                String item = in.nextLine();
                 if (item.equalsIgnoreCase("Rusted Key")) {
                     if (player.hasItem(item)) {
                         boolean validChoice = false;

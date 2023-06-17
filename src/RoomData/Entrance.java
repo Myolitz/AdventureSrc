@@ -70,12 +70,17 @@ public class Entrance {
             if (!plantInteraction) {
                 //Adding temporary "gameplay" for once you get an equally temporary towel and key you get from the back hallway (you use this iron key to finish the game).
                 if (!Player.isWet()) { //FIXME properly implement once the "endless" hallway portion is done
-                    System.out.println("You notice something hiding in between the dead leaves and dig it up.\n You found a small iron key");
+                    System.out.println("""
+                                            You notice something hiding in between the dead leaves and dig it up.
+                                            
+                                                                You found an [Iron Key].
+                         
+                            """);
                     Player.addItem("Iron Key");
                     this.plantInteraction = true;
                     setRoomDesc(rackInteraction, plantInteraction);
                 }
-                else if (Player.isWet()) {
+                else {
                     System.out.println("Probably not the best idea to mess with dirt while wet.\n");
                 }
             }
