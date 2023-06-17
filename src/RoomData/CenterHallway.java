@@ -10,8 +10,8 @@ public class CenterHallway {
     public CenterHallway () {
         this.name = "Center Hallway";
         this.description = """
-                                        What seems to be the heart of the house.
-                                 Connecting the front, back and western part of the house.
+                                           What seems to be the heart of the house.
+                                   Connecting the front, back and western part of the house.
                                            What a comfortable looking couch...
                 """;
         this.couchInteraction = false;
@@ -29,6 +29,7 @@ public class CenterHallway {
                               You sit down, you can feel your consciousness fading with how comfortable it is...
                                     Best to not keep extending your visit though, so you stand back up.
                     """);
+                couchInteraction = true;
             }
             else {
                 System.out.println("""

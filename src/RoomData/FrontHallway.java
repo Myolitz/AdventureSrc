@@ -14,39 +14,39 @@ public class FrontHallway {
     public FrontHallway() {
         this.name = "Front Hallway";
         this.description = """
-                Going further into the house you are now in a quaint little hallway, adorned with some paintings.
-                 On the opposite wall you see a nice little desk with two drawers and a typewriter on top of it.
-                                  How old must this place be if typewriters are still in use?""";
+                       Going further into the house you are now in a quaint little hallway, adorned with some paintings.
+                        On the opposite wall you see a nice little desk with two drawers and a typewriter on top of it.
+                                          How old must this place be if typewriters are still in use?
+                """;
         this.typeWriterInteraction = false;
         this.drawerInteraction = false;
     }
 
     public void interaction(String object, PlayerData player, Scanner in) {
 
-        if (object.equalsIgnoreCase("Painting")) {
+        if (object.equalsIgnoreCase("Painting") || object.equalsIgnoreCase("Paintings")) {
             System.out.println("""
                                 A painting of an empty coat rack and another of a used coat rack...
                                   Quite the odd choice of art to display, but to each their own
                 """);
         }
-        //Hopefully works as intended in order to "use" the key gotten from Back hallway drawer, probably won't work (for now)
         else if (object.equalsIgnoreCase("Drawer")) {
             System.out.println("It's a drawer like many you've seen before in your everyday life, keyhole and all");
             String action = in.next();
             if (action.equalsIgnoreCase("Use")) {
                 System.out.println("What item do you want to use?");
-                String itemPart1 = in.next();
-                String itemPart2 = in.next();
-                String fullItem = itemPart1 + " " + itemPart2;
-                if (fullItem.equalsIgnoreCase("Rusted Key")) {
-                    if (player.hasItem(fullItem)) {
+                String item1 = in.next();
+                String item2 = in.next();
+                String item3 = item1 + " " + item2; //It wouldn't work w/o doing this...uhh TODO: Look into this
+                if (item3.equalsIgnoreCase("Rusted Key")) {
+                    if (player.hasItem(item3)) {
                         boolean validChoice = false;
                         while (!validChoice) {
                             System.out.println("Do you want to use the item? [Y/N]");
                             String option = in.next();
                             switch (option) {
                                 case "Y" -> {
-                                    player.useItem(fullItem);
+                                    player.useItem(item3);
                                     System.out.println("""
                                                                 The key fits perfectly in the keyhole, unlocking the mechanism.
                                                                 
@@ -130,7 +130,7 @@ public class FrontHallway {
         return this.name;
     }
 
-    public void setRoomDesc() {
+    public void setRoomDesc() { //Implement later
         if (!typeWriterInteraction && drawerInteraction){
            System.out.println("Option 1");
         }

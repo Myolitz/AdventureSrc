@@ -1,4 +1,4 @@
-/**
+/*
  * Lazy Terminology Key:
  * DNT = DO NOT TOUCH (aka its working as intended)
  * NYI = Not yet implemented
@@ -12,7 +12,7 @@
  * -------------------------------------
  * TODO:
  * Clean up main.java (ik its using generally "basic" things but jfc) <- also part of why I want to switch to not using switches for everything lol
- **/
+ */
 
 import PlayerData.PlayerData;
 import RoomData.*;
@@ -51,25 +51,12 @@ public class Main {
                         menuChoice = 4; //I have 0 idea why, but not having this makes it loop, so yeah. *IT*
                     }
                     case 2 -> { //Gives version. TODO: Manually change this
-                        System.out.println("You are currently on version Alpha 0.5 - Back Hallway Done");
+                        System.out.println("You are currently on version Alpha 0.6 - Text Fixes + Universal Controls");
                         validChoice = true;
                         userStr = userChoiceStr(input);
                     }
                     case 3 -> {
-                        //TODO: Update as you develop game
-                        System.out.println(
-                                """
-                                        There aren't many controls, through the basic ones include (They are case-sensitive btw)
-                                        - Forward
-                                        - Backward
-                                        - Inventory
-                                        - Interact
-                                        - Back, to back out of menus like this one
-                                        - Location
-                                        - You can type 'Quit' at any given type to exit the game once you start (PI)
-                                        - Left/Right (PI @ room1 & room2)
-                                        - Use (PI)"""
-                        );
+                        printControls();
                         validChoice = true;
                         userStr = userChoiceStr(input);
                     }
@@ -106,6 +93,24 @@ public class Main {
         }
     }
 
+    public static void printControls() { //TODO: Update as you implement things
+        System.out.println(
+                """
+                        There aren't many controls, through the basic ones include:
+                        - Forward
+                        - Backward
+                        - Inventory
+                        - Interact
+                        - Back, to back out of menus like this one <- currently limited to main menu
+                        - Location
+                        - You can type 'Quit' at any given type to exit the game once you start (PI)
+                        - Left/Right (Implemented, though not fleshed out)
+                        - Use
+                        - Controls - Brings up this menu :)
+                        * They are case-sensitive until I switch to hashmaps, so make sure to capitalize (for now)"""
+        );
+    }
+
     //Might delete these 2 as I don't seem to call upon them like at all lmao (rewrite the input code for shit if swapping to this long-term)
     public static int userChoice(Scanner in) {
         return in.nextInt();
@@ -137,9 +142,9 @@ public class Main {
 
         //For reference, this is map layout if you're looking over this code
         /* n = null, r = room, i = implemented
-         * n n r r n
-         * r n r n n
-         * r r r n n
+         * n n i r n
+         * r n i n n
+         * r r i n n
          * r n i n r
          * n r i r r
          */
@@ -147,10 +152,10 @@ public class Main {
         //Background, maybe replace with object elsewhere (Game class? maybe for stuff like game.printMenu() n stuff)
         //Moved outside the while loop to not have it print every time I tried quitting mid-game
         System.out.println("""
-                               You had no idea where you were going after a night of drinking.
-                                    Was it even your house that you stumbled upon?
-                A feeling of uneasiness washes over, but with it raining you disregard the possible concerns.
-                   The door opens without so much as a speck of resistance and throw yourself into the house.
+                                   You had no idea where you were going after a night of drinking.
+                                           Was it even your house that you stumbled upon?
+                       A feeling of uneasiness washes over, but with it raining you disregard the possible concerns.
+                       The door opens without so much as a speck of resistance and throw yourself into the house.
                 """);
 
         //REMEMBER TO FUCKING UPDATE THE VARIABLE, YOU YES YOU FUTURE MYO
@@ -178,7 +183,7 @@ public class Main {
                     //System.out.println("Test Room 4 Complete");
                     //gameRunning = false;
                 }
-                case "Back Entrance" -> {   //TODO: implement
+                case "Back Entrance" -> {
                     playerLocation = backEntrance(in, roomFive, player);
 //                    System.out.println("Test Room 5 Complete");
                 }
@@ -217,7 +222,7 @@ public class Main {
             switch (choice) {
                 case "Forward" -> {
                     System.out.println("""
-                                                           You go further into the house
+                                                            You go further into the house
                             """);
                     return "Front Hallway";
                 }
@@ -228,19 +233,19 @@ public class Main {
                 }
                 case "Right" -> {
                     System.out.println("""
-                                        A seemingly endless hallway is now before you, you dare not go into it.
-                                                    (Yes its NYI, but dw come back later ;))
+                                             A seemingly endless hallway is now before you, you dare not go into it.
+                                                         (Yes its NYI, but dw come back later ;))
                             """);
                 }
                 case "Left" -> {
                     System.out.println("""
-                                                 You enter a lavishly designed office space.
-                                    Simply entering the room makes your head hurt due to how shiny everything is.
-                                          Better not touch anything and try to get out of this house
+                                                        You enter a lavishly designed office space.
+                                            Simply entering the room makes your head hurt due to how shiny everything is.
+                                                Better not touch anything and try to get out of this house
                             """);
                 }
                 case "Backward" -> {    //DNT
-                    System.out.println("It's raining outside, probably not a smart idea to go back outside.\n");
+                    System.out.println("                    It's raining outside, probably not a smart idea to go back outside.\n");
                 }
                 //TODO: Re-check in case "global" item use is implemented later
                  case "Inventory" -> {  //DNT
@@ -250,6 +255,10 @@ public class Main {
                     System.out.println("What item would you like to use?");
                     String object = in.next();
                     player.useItemGlobal(object);
+                }
+                case "Controls" -> {
+                    printControls();
+                    System.out.println();
                 }
                 case "Quit" -> {       //DNT
                     return "Quit";
@@ -283,48 +292,52 @@ public class Main {
             }
             choice = userChoiceStr(in);
             switch (choice) {
-                case "Forward" -> {
+                case "Forward" -> { //DNT
                     System.out.println("""
                                                          You go into the heart of the house
                             """);
                     return "Center Hallway";
                 }
-                case "Interact" -> {
+                case "Interact" -> { //DNT
                     System.out.println("What would you like to interact with?");
                     String objectInteraction = in.next();
                     roomTwo.interaction(objectInteraction, player, in);
                 }
-                case "Right" -> {
+                case "Right" -> { //DNT
                     System.out.println("""
-                                             The desk with the typewriter blocks your path.
-                               Though considering there's a wall behind them, not sure what the plan was.
+                                                        The desk with the typewriter blocks your path.
+                                            Though considering there's a wall behind them, not sure what the plan was.
                             """);
 
                 }
-                case "Left" -> {
+                case "Left" -> { //DNT
                     System.out.println("""
-                            Seeing as the paintings are hung on the wall, walking towards the wall would yield
-                                                    nothing but a face-full of wall
+                                    Seeing as the paintings are hung on the wall, walking towards the wall would yield
+                                                            nothing but a face-full of wall
                             """);
 
                 }
                 case "Backward" -> {    //DNT
-                    System.out.println("        Maybe you missed something in the entrance, lets go back and check.\n");
+                    System.out.println("                Maybe you missed something in the entrance, lets go back and check.\n");
                     return "Front Entrance";
                 }
                 //TODO: Inventory interactions (keeping this here now that room 1 is done JUST as a reminder in case I add shit that would require "global" item use
                 case "Inventory" -> {  //DNT
                     player.getInventory();
                 }
-                case "Use" -> {
+                case "Use" -> { //IT
                     System.out.println("What item would you like to use?");
                     String object = in.next();
                     player.useItemGlobal(object);
                 }
+                case "Controls" -> { //DNT
+                    printControls();
+                    System.out.println();
+                }
                 case "Quit" -> {       //DNT
                     return "Quit";
                 }
-                case "Location" -> {
+                case "Location" -> { //DNT
                     System.out.println(player.getLocation());
                 }
                 default -> {              //DNT
@@ -353,7 +366,7 @@ public class Main {
             choice = userChoiceStr(in);
             switch (choice) {
                 case "Forward" -> {
-                    System.out.println("                    You go towards the back of the house.\n");
+                    System.out.println("                        You go towards the back of the house.\n");
                     return "Back Hallway";
                 }
                 case "Interact" -> {
@@ -370,12 +383,12 @@ public class Main {
                 }
                 case "Left" -> {
                     System.out.println("""
-                                    There is a path branching to the left though best to not dilly-dally.
+                                        There is a path branching to the left though best to not dilly-dally.
                             """);
 
                 }
                 case "Backward" -> {    //DNT
-                    System.out.println("                    Might've missed something back there...\n");
+                    System.out.println("                        Might've missed something back there...\n");
                     return "Front Hallway";
                 }
                 //TODO: Inventory interactions (keeping this here now that room 1 is done JUST as a reminder in case I add shit that would require "global" item use
@@ -386,6 +399,10 @@ public class Main {
                     System.out.println("What item would you like to use?");
                     String object = in.next();
                     player.useItemGlobal(object);
+                }
+                case "Controls" -> { //DNT
+                    printControls();
+                    System.out.println();
                 }
                 case "Quit" -> {       //DNT
                     return "Quit";
@@ -420,7 +437,7 @@ public class Main {
             choice = userChoiceStr(in);
             switch (choice) {
                 case "Forward" -> {
-                    System.out.println("You see a door up ahead");
+                    System.out.println("                                You see a door up ahead\n");
                     return "Back Entrance";
                 }
                 case "Interact" -> {
@@ -442,7 +459,7 @@ public class Main {
 
                 }
                 case "Backward" -> {    //DNT
-                    System.out.println("                Man that couch was comfortable, let's head back\n");
+                    System.out.println("                        Man that couch was comfortable, let's head back\n");
                     return "Center Hallway";
                 }
                 //TODO: Inventory interactions (keeping this here now that room 1 is done JUST as a reminder in case I add shit that would require "global" item use
@@ -453,6 +470,10 @@ public class Main {
                     System.out.println("What item would you like to use?");
                     String object = in.next();
                     player.useItemGlobal(object);
+                }
+                case "Controls" -> { //DNT
+                    printControls();
+                    System.out.println();
                 }
                 case "Quit" -> {       //DNT
                     return "Quit";
@@ -511,7 +532,7 @@ public class Main {
 
                 }
                 case "Backward" -> {    //DNT
-                    System.out.println("                Man that couch was comfortable, let's head back\n");
+                    System.out.println("                    Maybe there was something left unchecked...\n");
                     return "Back Hallway";
                 }
                 //TODO: Inventory interactions (keeping this here now that room 1 is done JUST as a reminder in case I add shit that would require "global" item use
@@ -522,6 +543,10 @@ public class Main {
                     System.out.println("What item would you like to use?");
                     String object = in.next();
                     player.useItemGlobal(object);
+                }
+                case "Controls" -> { //DNT
+                    printControls();
+                    System.out.println();
                 }
                 case "Quit" -> {       //DNT
                     return "Quit";

@@ -10,9 +10,9 @@ public class BackHallway {
     public BackHallway() {
         this.name = "Back Hallway";
         this.description = """
-                           The back entrance is now visible, however you are now in a hallway
-                            that is populated only by a roll-top desk and a mirror above it.
-                                     Reminds you of the bread boxes of old
+                            The back entrance is now visible, however you are now in a hallway
+                              that is populated only by a roll-top desk and a mirror above it.
+                                        Reminds you of the bread boxes of old
                 """;
     }
 
@@ -21,7 +21,7 @@ public class BackHallway {
             this.description = """
                             The back entrance is now visible, however you are now in a hallway
                              that is populated only by a roll-top desk and a mirror above it.
-                       Reminds you of the bread boxes of old, just needing the bread now that its open
+                     Reminds you of the bread boxes of old, just needing the bread to fill the space inside.
                     """;
         }
     }
@@ -30,8 +30,8 @@ public class BackHallway {
         if (object.equalsIgnoreCase("Desk")) {
             if (!player.hasItem("Coat")) {
                 if (!drawerInteraction) {
-                    System.out.println("         It's open! Revealing a towel alongside a rusted key");
-                    System.out.println("               You found a [Towel] and [Rusted Key]\n");
+                    System.out.println("                    It's open! Revealing a towel alongside a rusted key");
+                    System.out.println("                            You found a [Towel] and [Rusted Key]\n");
                     drawerInteraction = true;
                     player.addItem("Towel");
                     player.addItem("Rusted Key");
@@ -48,7 +48,9 @@ public class BackHallway {
                            While you are no longer fully wet, your clothes still are...Hope you got a change of clothes
                         """);
             }
-            System.out.println("You see your wet-disheveled self staring right back at you");
+            else {
+                System.out.println("        You see your wet-disheveled self staring right back at you\n");
+            }
         }
     }
 

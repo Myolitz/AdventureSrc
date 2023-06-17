@@ -11,10 +11,10 @@ public class Entrance {
     public Entrance() {
         this.name = "Front Entrance";
         this.description = """
-                Almost as if you were transported to a victorian mansion, you are hit with an immediate sense of luxury. 
-                                                    Are you meant to be here?  
-                  Intricate patterns line the wall, opening up to a hallway straight head, past a wilted potted plant
-                and a coat rack that towers over you, leaving you wondering how one is supposed to hang their coat on it.
+                      Almost as if you were transported to a Victorian mansion, you are hit with an immediate sense of luxury. 
+                                                        Are you meant to be here?  
+                        Intricate patterns line the wall, opening up to a hallway straight head, past a wilted potted plant.
+                A coat rack opposite the plant towers over you, leaving you wondering how one is supposed to hang their coat on it.
                 """;
     }
 
@@ -25,24 +25,21 @@ public class Entrance {
     public void setRoomDesc(boolean rackInteraction, boolean plantInteraction) {
         if (rackInteraction && !plantInteraction) {
             this.description = """
-                Almost as if you were transported to a victorian mansion, you are hit with an immediate sense of luxury. 
-                                                  Are you meant to be here?  
-                  Intricate patterns line the wall, opening up to a hallway straight head, past a wilted potted plant
-                    and a coat rack that towers over you, now adorned with your wet coat, seeming taller than ever.
+                 Almost as if you were transported to a Victorian mansion, you are hit with an immediate sense of luxury. 
+                   Intricate patterns line the wall, opening up to a hallway straight head, past a wilted potted plant.
+                  A coat rack opposite the plant towers over you, now adorned with your wet coat, seems taller than ever.
                 """;
         }
         else if (!rackInteraction && plantInteraction) {
             this.description = """
-                    Almost as if you were transported to a victorian mansion, you are hit with an immediate sense of luxury. 
-                                                  Are you meant to be here?  
-                       Intricate patterns line the wall, opening up to a hallway straight head, past a now dug up potted
-                plant and a coat rack that towers over you, leaving you wondering how one is supposed to hang their coat on it.
+                       Almost as if you were transported to a Victorian mansion, you are hit with an immediate sense of luxury. 
+                       Intricate patterns line the wall, opening up to a hallway straight head, past a now dug up potted plant.
+                A coat rack opposite the plant towers over you, leaving you wondering how one is supposed to hang their coat on it.
                 """;
         }
         else if (rackInteraction && plantInteraction) {
             this.description = """
-                   Almost as if you were transported to a victorian mansion, you are hit with an immediate sense of luxury. 
-                                                  Are you meant to be here?  
+                   Almost as if you were transported to a Victorian mansion, you are hit with an immediate sense of luxury. 
                      Intricate patterns line the wall, opening up to a hallway straight head, past a now dug up potted 
                 plant and a coat rack that towers over you, now adorned with your wet coat, though it now seems taller than ever.
                 """;
@@ -54,10 +51,10 @@ public class Entrance {
         if (object.equalsIgnoreCase("Rack")) {
             if (!rackInteraction) {
                 System.out.println("""
-                        You hang your coat on the rack, hearing a loud "click" come from further in the house.
-                                        Well at least you can stop wearing that wet coat...
+                                You hang your coat on the rack, hearing a loud "click" come from further in the house.
+                                                Well at least you can stop wearing that wet coat...
                                                     
-                                                    You used [Coat]
+                                                            You used [Coat]
                         """);
                 Player.useItem("Coat");
                 rackInteraction = true;
@@ -82,7 +79,7 @@ public class Entrance {
                     setRoomDesc(rackInteraction, plantInteraction);
                 }
                 else {
-                    System.out.println("            Probably not the best idea to mess with dirt while wet.\n");
+                    System.out.println("                        Probably not the best idea to mess with dirt while wet.\n");
                 }
             }
             else {

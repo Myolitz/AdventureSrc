@@ -11,8 +11,8 @@ public class BackEntrance {
     public BackEntrance() {
         this.name = "Back Entrance";
         this.description = """
-                                                    You reach a door that you can only assume leads outside
-                                                                It's missing a handle though...
+                                   You reach a door that you can only assume leads outside
+                                              It's missing a handle though...
                 """;
         isDoorUnlocked = false;
     }
@@ -46,8 +46,8 @@ public class BackEntrance {
                                         """);
                                 player.useItem("Handle");
                                 doorHandle = true;
-                                validChoice = true;
                                 setRoomDesc();
+                                validChoice = true;
                             }
                             case "N" -> {
                                 System.out.println("                    You put the handle back in your pocket");
@@ -58,7 +58,7 @@ public class BackEntrance {
                         }
                     }
                 }
-                else if (userItem.equalsIgnoreCase("Iron")) { //TODO: fix by making it detect "iron key" fully
+                else if (userItem.equalsIgnoreCase("Iron")) { //TODO: fix by making it detect "iron key" fully (working as intended, so *IT*)
                     if (!doorHandle) {
                         System.out.println("""
                                                         There isn't anything to use the key on, you put it back in your pocket
@@ -79,6 +79,7 @@ public class BackEntrance {
                                                     """);
                                     player.useItem("Iron Key");
                                     isDoorUnlocked = true;
+                                    setRoomDesc();
                                     validChoice = true;
                                 }
                                 case "N" -> {
@@ -99,14 +100,14 @@ public class BackEntrance {
     public void setRoomDesc() {
         if (doorHandle && !isDoorUnlocked) {
             this.description = """
-                                                    You reach a door that you can only assume leads outside
-                                                          Its got a handle now, though how to unlock it...
+                                        You reach a door that you can only assume leads outside
+                                              Its got a handle now, though how to unlock it...
                 """;
         }
         else if (doorHandle && isDoorUnlocked) {
             this.description = """
-                                                    You reach a door that you can only assume leads outside
-                                                    It's now unlocked...you can only wonder what waits ahead.
+                                         You reach a door that you can only assume leads outside
+                                         It's now unlocked...you can only wonder what waits ahead.
                 """;
         }
     }

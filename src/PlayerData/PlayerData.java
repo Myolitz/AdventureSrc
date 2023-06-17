@@ -68,11 +68,13 @@ public class PlayerData {
                 switch (item) {
                     case "Towel" -> {
                         wet = false;
-                        System.out.println("                    Used [" + item + "]");
+                        System.out.println("                                    Used [" + item + "]\n");
                         inventory.remove(i);
                     }
                     case "Iron Key", "Rusted Key", "Coat", "Handle" -> {
-                        System.out.println("                    There is anything to use it on");
+                        System.out.println("""
+                                                        There isn't anything to use this on.\n
+                        """);
                     }
                 }
             }
