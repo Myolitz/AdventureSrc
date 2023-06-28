@@ -1,19 +1,16 @@
-package RoomData;
-import PlayerData.*;
+package main.RoomData;
+import main.PlayerData.*;
 import java.util.Scanner;
 
-public class FrontHallway {
-    private String name;
-    private String description;
-    //Spoilers lol
+public class FrontHallway extends BaseRoom{
+//    private String name;
+//    private String description;
     private boolean typeWriterInteraction;
     private boolean drawerInteraction;
-    //Check if needed
-//    private boolean paintingObservation;
 
     public FrontHallway() {
-        this.name = "Front Hallway";
-        this.description = """
+        name = "Front Hallway";
+        description = """
                        Going further into the house you are now in a quaint little hallway, adorned with some paintings.
                         On the opposite wall you see a nice little desk with two drawers and a typewriter on top of it.
                                           How old must this place be if typewriters are still in use?

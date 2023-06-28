@@ -1,6 +1,5 @@
-package RoomData;
-import PlayerData.*;
-import java.util.Scanner;
+package main.RoomData;
+import main.PlayerData.*;
 
 public class BackHallway {
     private String name;

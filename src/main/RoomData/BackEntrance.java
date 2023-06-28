@@ -1,6 +1,6 @@
-package RoomData;
+package main.RoomData;
 import java.util.Scanner;
-import PlayerData.*;
+import main.PlayerData.*;
 
 public class BackEntrance {
     public boolean isDoorUnlocked;
@@ -10,10 +10,7 @@ public class BackEntrance {
 
     public BackEntrance() {
         this.name = "Back Entrance";
-        this.description = """
-                                   You reach a door that you can only assume leads outside
-                                              It's missing a handle though...
-                """;
+        formatDescription();
         isDoorUnlocked = false;
     }
 
@@ -99,19 +96,42 @@ public class BackEntrance {
 
     public void setRoomDesc() {
         if (doorHandle && !isDoorUnlocked) {
-            this.description = """
-                                        You reach a door that you can only assume leads outside
-                                              Its got a handle now, though how to unlock it...
-                """;
+            formatDescription();
         }
         else if (doorHandle && isDoorUnlocked) {
-            this.description = """
-                                         You reach a door that you can only assume leads outside
-                                         It's now unlocked...you can only wonder what waits ahead.
-                """;
+            formatDescription();
         }
     }
     public boolean isDoorUnlocked() {
         return isDoorUnlocked;
+    }
+
+    public void formatDescription() {
+        String whitespace = "";
+        if (doorHandle && !isDoorUnlocked) {
+            String desc1 = "You reach a door that you can only assume leads outside";
+            String desc2 = "Its got a handle now, though how to unlock it...";
+            this.description = String.format("""
+                |%2$-10s|
+                %1$4s|%3$30s|
+                """, whitespace, desc1, desc1);
+        }
+        else if (doorHandle && isDoorUnlocked) {
+            String desc1 = "You reach a door that you can only assume leads outside";
+            String desc2 = "It's now unlocked...you can only wonder what waits ahead...";
+            String.format("""
+                %1$2s|%2$-10s|
+                |%3$30s|
+                """, whitespace, desc1, desc2);
+        }
+        else {
+            String desc1 = "You reach a door that you can only assume leads outside";
+            String desc2 = "It's missing a handle though...";
+            this.description = String.format("""
+                        |%2$-10s|
+                        %1$10s|%3$30s|
+                        """, whitespace, desc1, desc2);
+        }
+
     }
 }

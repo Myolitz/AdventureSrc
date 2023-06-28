@@ -1,6 +1,5 @@
-package RoomData;
-import java.util.Scanner;
-import PlayerData.*;
+package main.RoomData;
+import main.PlayerData.*;
 public class CenterHallway {
     private String name;
     private String description;

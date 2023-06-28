@@ -1,4 +1,4 @@
-package PlayerData;
+package main.PlayerData;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ public class PlayerData {
 
     public void defaultValues() {
         name = "none";
-        inventory = new ArrayList<String>(); //Prohibits NullPointerException, ran by PlayerData.PlayerData
+        inventory = new ArrayList<String>(); //Prohibits NullPointerException, ran by main.PlayerData.main.PlayerData
         inventory.add("Coat");
         location = "Front Entrance";
     }

@@ -1,3 +1,4 @@
+package main;
 /*
  * Lazy Terminology Key:
  * DNT = DO NOT TOUCH (aka its working as intended)
@@ -14,8 +15,8 @@
  * Clean up main.java (ik its using generally "basic" things but jfc) <- also part of why I want to switch to not using switches for everything lol
  */
 
-import PlayerData.PlayerData;
-import RoomData.*;
+import main.PlayerData.PlayerData;
+import main.RoomData.*;
 import java.util.Scanner;
 
 public class Main {
@@ -148,7 +149,7 @@ public class Main {
          * r n i n r
          * n r i r r
          */
-        //TODO maybe move actions to the room classes rather than Main.java to de-clog
+        //TODO maybe move actions to the room classes rather than main.Main.java to de-clog
         //Background, maybe replace with object elsewhere (Game class? maybe for stuff like game.printMenu() n stuff)
         //Moved outside the while loop to not have it print every time I tried quitting mid-game
         System.out.println("""
