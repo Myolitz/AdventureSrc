@@ -52,7 +52,7 @@ public class Main {
                         menuChoice = 4; //I have 0 idea why, but not having this makes it loop, so yeah. *IT*
                     }
                     case 2 -> { //Gives version. TODO: Manually change this
-                        System.out.println("You are currently on version Alpha 0.6 - Text Fixes + Universal Controls");
+                        System.out.println("You are currently on version Alpha 0.6.1 - Even more Text Fixes");
                         validChoice = true;
                         userStr = userChoiceStr(input);
                     }
@@ -149,7 +149,7 @@ public class Main {
          * r n i n r
          * n r i r r
          */
-        //TODO maybe move actions to the room classes rather than main.Main.java to de-clog
+        //TODO: maybe move actions to the room classes rather than main.Main.java to de-clog
         //Background, maybe replace with object elsewhere (Game class? maybe for stuff like game.printMenu() n stuff)
         //Moved outside the while loop to not have it print every time I tried quitting mid-game
         System.out.println("""

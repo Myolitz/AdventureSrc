@@ -114,7 +114,7 @@ public class BackEntrance {
             this.description = String.format("""
                 |%2$-10s|
                 %1$4s|%3$30s|
-                """, whitespace, desc1, desc1);
+                """, whitespace, desc1, desc2);
         }
         else if (doorHandle && isDoorUnlocked) {
             String desc1 = "You reach a door that you can only assume leads outside";

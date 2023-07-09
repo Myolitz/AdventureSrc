@@ -6,6 +6,7 @@ public class Entrance {
     private String description;
     private boolean plantInteraction = false;
     private boolean rackInteraction = false;
+    public String whitespace = "";
 
 
     public Entrance() {
@@ -25,48 +26,48 @@ public class Entrance {
             formatDescription();
         }
         else if (rackInteraction && plantInteraction) {
-            this.description = """
-                  Almost as if you were transported to a Victorian mansion, you are hit with an immediate sense of luxury.
-                  Intricate patterns line the wall, opening up to a hallway straight ahead, past a now dug up potted plant
-                and a coat rack that towers over you, now adorned with your wet coat, though it now seems taller than ever.
-                """;
+            formatDescription();
         }
     }
     public void interaction(String object, PlayerData Player) {
         String str;
+
         //Use system below on other interact-able objects down the line, its simple, though might require more interacted boolean vars :)
         if (object.equalsIgnoreCase("Rack")) {
             if (!rackInteraction) {
-                System.out.println("""
-                                You hang your coat on the rack, hearing a loud "click" come from further in the house.
-                                                Well at least you can stop wearing that wet coat...
-                                                    
-                                                            You used [Coat]
-                        """);
+                String desc1 = "You hang your coat on the rack, hearing a loud \"click\" come from further in the house.";
+                String desc2 = "Well at least you can stop wearing that wet coat...";
+
+                System.out.printf("""
+                        %1$12s|%2$s|
+                        %1$25s|%3$s|
+                        """, whitespace, desc1, desc2);
+
+
                 Player.useItem("Coat");
                 rackInteraction = true;
                 setRoomDesc(rackInteraction, plantInteraction);
             }
             else {
-                System.out.println("You only came in with one coat");
+                String desc1 = "You only came in with one coat";
+                System.out.printf("%1$35s|%2$s|", whitespace, desc1);
             }
         }
         else if (object.equalsIgnoreCase("Plant")) {
             if (!plantInteraction) {
                 //Adding temporary "gameplay" for once you get an equally temporary towel and key you get from the back hallway (you use this iron key to finish the game).
                 if (!Player.isWet()) { //FIXME properly implement once the "endless" hallway portion is done
-                    System.out.println("""
-                                            You notice something hiding in between the dead leaves and dig it up.
-                                            
-                                                                You found an [Iron Key].
-                         
-                            """);
+                    String desc1 = "You notice something hiding in between the dead leaves and dig it up.";
+
+                    System.out.printf("%1$18s|%2$s|", whitespace, desc1);
+
                     Player.addItem("Iron Key");
                     this.plantInteraction = true;
                     setRoomDesc(rackInteraction, plantInteraction);
                 }
                 else {
-                    System.out.println("                        Probably not the best idea to mess with dirt while wet.\n");
+                    String desc1 = "Probably not the best idea to mess with dirt while wet.";
+                    System.out.printf("%1$22s|%2$s|", whitespace, desc1);
                 }
             }
             else {
@@ -77,9 +78,8 @@ public class Entrance {
     public String getRoomName() {
         return this.name;
     }
-
+    //There's probably a better way of doing this but oh well
     public void formatDescription() {
-        String whitespace = "";
 
         String desc1 = "Almost as if you were transported to a Victorian mansion, you are hit with an immediate sense of luxury.";
         String desc2;
