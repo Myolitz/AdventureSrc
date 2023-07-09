@@ -5,6 +5,7 @@ package main;
  * NYI = Not yet implemented
  * IT = In Testing
  * PI = Partially Implemented
+ * MI = Mostly Implemented (and working as intended)
  * -------------------------------------
  * Ideas for future:
  * player orientation affecting left/right prompts
@@ -13,13 +14,20 @@ package main;
  * -------------------------------------
  * TODO:
  * Clean up main.java (ik its using generally "basic" things but jfc) <- also part of why I want to switch to not using switches for everything lol
- */
+ * Find a way to format text automatically without having to do a bunch of String.format shit (literally just look at any formatDescription() method within the room classes
+ * Implement a dictionary of sort using a HashSet, NOT HashMap (WIP)
+ * Continuation of Main clean-up -> Move the gameplay to its own "game" class or something similar
+ * Once you implement the hashsets, fix the logic for deciding player movement.
+ * */
 
-import main.PlayerData.PlayerData;
+
+import main.PlayerData.*;
 import main.RoomData.*;
 import java.util.Scanner;
 
 public class Main {
+    public static String whitespace = "";
+
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
@@ -52,7 +60,7 @@ public class Main {
                         menuChoice = 4; //I have 0 idea why, but not having this makes it loop, so yeah. *IT*
                     }
                     case 2 -> { //Gives version. TODO: Manually change this
-                        System.out.println("You are currently on version Alpha 0.6.1 - Even more Text Fixes");
+                        System.out.println("You are currently on version Alpha 0.6.2 - Text Formatting Galore");
                         validChoice = true;
                         userStr = userChoiceStr(input);
                     }
@@ -81,7 +89,7 @@ public class Main {
     //Prints out menu using perfect size array - DNT
     public static void printMenu() {
         String[] menuOptions = new String[] {"1. Play", "2. Version", "3. Controls", "4. Quit"};
-        //noinspection SpellCheckingInspection
+        //noinspection SpellCheckingInspection <- what the fuck was this for?????
         System.out.println("""
                              Welcome to
                            The Adventureᵀᴹ
@@ -97,22 +105,23 @@ public class Main {
     public static void printControls() { //TODO: Update as you implement things
         System.out.println(
                 """
-                        There aren't many controls, through the basic ones include:
+                        The basic controls include the following:
                         - Forward
                         - Backward
                         - Inventory
                         - Interact
                         - Back, to back out of menus like this one <- currently limited to main menu
                         - Location
-                        - You can type 'Quit' at any given type to exit the game once you start (PI)
-                        - Left/Right (Implemented, though not fleshed out)
+                        - Quit - Lets you exit the game at any point (MI)
+                        - Left/Right (Commands DNT, locations NYI)
                         - Use
-                        - Controls - Brings up this menu :)
+                        - Controls - Brings up this menu (MI)
                         * They are case-sensitive until I switch to hashmaps, so make sure to capitalize (for now)"""
         );
     }
 
     //Might delete these 2 as I don't seem to call upon them like at all lmao (rewrite the input code for shit if swapping to this long-term)
+    //FIXME crash when inputting things like "1F" during the menu n shit
     public static int userChoice(Scanner in) {
         return in.nextInt();
     }
@@ -123,7 +132,7 @@ public class Main {
 
     //Unsure if any dialogue will even happen, so method might get yeeted - DNT (for now)
     public static String charName (Scanner in) {
-        System.out.println("Enter your characters name (Won't affect story that much).");
+        System.out.println("Enter your characters name: (It has no effect on the story so far)");
         return in.next();
     }
 
@@ -149,15 +158,29 @@ public class Main {
          * r n i n r
          * n r i r r
          */
-        //TODO: maybe move actions to the room classes rather than main.Main.java to de-clog
+        //TODO: maybe move actions to the room classes rather than Main.java to de-clog
         //Background, maybe replace with object elsewhere (Game class? maybe for stuff like game.printMenu() n stuff)
         //Moved outside the while loop to not have it print every time I tried quitting mid-game
-        System.out.println("""
-                                   You had no idea where you were going after a night of drinking.
-                                           Was it even your house that you stumbled upon?
-                       A feeling of uneasiness washes over, but with it raining you disregard the possible concerns.
-                       The door opens without so much as a speck of resistance and throw yourself into the house.
-                """);
+//        System.out.println("""
+//                                   You had no idea where you were going after a night of drinking.
+//                                           Was it even your house that you stumbled upon?
+//                       A feeling of uneasiness washes over, but with it raining you disregard the possible concerns.
+//                       The door opens without so much as a speck of resistance and throw yourself into the house.
+//                """);
+
+        //Ended up being easier to just do this mess with printf, though w/e, Imma leave it as a reminder to not to text boxes
+        String desc1 = "You had no idea where you were going after a night of drinking";
+        String desc2 = "Was it even your house that you stumbled upon?";
+        String desc3 = "A feeling of uneasiness washes over, but with it raining you disregard any possible concerns";
+        String desc4 = "The door opens without so much as a spec of resistance as you throw yourself into the house";
+
+        System.out.printf("""
+                %1$26s|%2$s|
+                %1$35s|%3$s|
+                %1$12s|%4$s|
+                %1$12s|%5$s|
+                
+                """, whitespace, desc1, desc2, desc3, desc4);
 
         //REMEMBER TO FUCKING UPDATE THE VARIABLE, YOU YES YOU FUTURE MYO
         while (gameRunning) {
@@ -189,7 +212,7 @@ public class Main {
 //                    System.out.println("Test Room 5 Complete");
                 }
                 case "Game Complete" -> {
-                    System.out.println("             Thanks for playing, hopefully you'll come back when the game is updated :)");
+                    System.out.printf("%1$24s|Thanks for playing, hopefully you'll come back when its updated|\n", whitespace);
                     gameRunning = false;
                 }
                 case "Quit" -> {
@@ -222,9 +245,7 @@ public class Main {
             choice = userChoiceStr(in);
             switch (choice) {
                 case "Forward" -> {
-                    System.out.println("""
-                                                            You go further into the house
-                            """);
+                    System.out.printf("%1$36s|You go further into the house|\n", whitespace);
                     return "Front Hallway";
                 }
                 case "Interact" -> {
@@ -233,20 +254,15 @@ public class Main {
                     roomOne.interaction(objectInteraction, player);
                 }
                 case "Right" -> {
-                    System.out.println("""
-                                             A seemingly endless hallway is now before you, you dare not go into it.
-                                                         (Yes its NYI, but dw come back later ;))
-                            """);
+                    System.out.printf("%1$20s|A seemingly endless hallway is now before you, you dare not go into it.|\n", whitespace);
                 }
                 case "Left" -> {
-                    System.out.println("""
-                                                        You enter a lavishly designed office space.
-                                            Simply entering the room makes your head hurt due to how shiny everything is.
-                                                Better not touch anything and try to get out of this house
-                            """);
+                    System.out.printf("%1$34s|Quite the lavish office space...|\n",whitespace);
+                    System.out.printf("%1$17s|Simply entering the room makes your head hurt with how shiny everything is|\n",whitespace);
+                    System.out.printf("%1$36s|Better to not touch anything|\n",whitespace);
                 }
                 case "Backward" -> {    //DNT
-                    System.out.println("                    It's raining outside, probably not a smart idea to go back outside.\n");
+                    System.out.printf("%1$36s|It's still raining outside...|\n", whitespace);
                 }
                 //TODO: Re-check in case "global" item use is implemented later
                  case "Inventory" -> {  //DNT
@@ -294,9 +310,7 @@ public class Main {
             choice = userChoiceStr(in);
             switch (choice) {
                 case "Forward" -> { //DNT
-                    System.out.println("""
-                                                         You go into the heart of the house
-                            """);
+                    System.out.printf("%1$36s|You go into the heart of the house|\n", whitespace);
                     return "Center Hallway";
                 }
                 case "Interact" -> { //DNT
@@ -305,21 +319,15 @@ public class Main {
                     roomTwo.interaction(objectInteraction, player, in);
                 }
                 case "Right" -> { //DNT
-                    System.out.println("""
-                                                        The desk with the typewriter blocks your path.
-                                            Though considering there's a wall behind them, not sure what the plan was.
-                            """);
-
+                    System.out.printf("%1$28s|The desk with the typewriter blocks your path.|\n", whitespace);
+                    System.out.printf("%1$31s|Though a wall lies behind it so...|\n", whitespace);
                 }
                 case "Left" -> { //DNT
-                    System.out.println("""
-                                    Seeing as the paintings are hung on the wall, walking towards the wall would yield
-                                                            nothing but a face-full of wall
-                            """);
-
+                    System.out.printf("%1$18s|Seeing as the paintings are hung on the wall, walking towards them would yield|\n", whitespace);
+                    System.out.printf("%137$s|nothing but a face-full of wall|\n", whitespace);
                 }
                 case "Backward" -> {    //DNT
-                    System.out.println("                Maybe you missed something in the entrance, lets go back and check.\n");
+                    System.out.printf("%1$31s|Maybe you missed something in the entrance|\n", whitespace);
                     return "Front Entrance";
                 }
                 //TODO: Inventory interactions (keeping this here now that room 1 is done JUST as a reminder in case I add shit that would require "global" item use
@@ -367,7 +375,7 @@ public class Main {
             choice = userChoiceStr(in);
             switch (choice) {
                 case "Forward" -> {
-                    System.out.println("                        You go towards the back of the house.\n");
+                    System.out.printf("%1$43s|You go towards the back of the house|\n", whitespace);
                     return "Back Hallway";
                 }
                 case "Interact" -> {
@@ -376,20 +384,14 @@ public class Main {
                     roomThree.interaction(objectInteraction, player);
                 }
                 case "Right" -> {
-                    System.out.println("""
-                                             There sits a couch blocking your path.
-                               Though considering there's a wall behind it, not sure what the plan was.
-                            """);
-
+                    System.out.printf("%1$42s|There sits a couch blocking your path.|\n", whitespace);
+                    System.out.printf("%1$38s|Though considering there's a wall behind it...|\n", whitespace);
                 }
                 case "Left" -> {
-                    System.out.println("""
-                                        There is a path branching to the left though best to not dilly-dally.
-                            """);
-
+                    System.out.printf("%1$s|There is a path branching to though best to not dilly-dally.|\n", whitespace);
                 }
                 case "Backward" -> {    //DNT
-                    System.out.println("                        Might've missed something back there...\n");
+                    System.out.printf("%1$s|Might've missed something back there... |\n", whitespace);
                     return "Front Hallway";
                 }
                 //TODO: Inventory interactions (keeping this here now that room 1 is done JUST as a reminder in case I add shit that would require "global" item use
@@ -438,7 +440,7 @@ public class Main {
             choice = userChoiceStr(in);
             switch (choice) {
                 case "Forward" -> {
-                    System.out.println("                                You see a door up ahead\n");
+                    System.out.printf("%1$45s|You see a door up ahead|\n", whitespace);
                     return "Back Entrance";
                 }
                 case "Interact" -> {
@@ -447,20 +449,14 @@ public class Main {
                     roomFour.interaction(objectInteraction, player);
                 }
                 case "Right" -> {
-                    System.out.println("""
-                                                    There is a wall blocking your path.
-                            """);
-
+                    System.out.printf("%1$40s|There is a wall blocking your path |\n", whitespace);
                 }
                 case "Left" -> {
-                    System.out.println("""
-                                                    The mirror and desk block your path
-                                            Though they prevent you from getting a face-full of wall.
-                            """);
-
+                    System.out.printf("%1$40s|The mirror and desk block your path|\n", whitespace);
+                    System.out.printf("%1$30s|Though they prevent you from getting a face-full of wall.|\n", whitespace);
                 }
                 case "Backward" -> {    //DNT
-                    System.out.println("                        Man that couch was comfortable, let's head back\n");
+                    System.out.printf("%1$35s|Man that couch was comfortable, let's head back|\n", whitespace);
                     return "Center Hallway";
                 }
                 //TODO: Inventory interactions (keeping this here now that room 1 is done JUST as a reminder in case I add shit that would require "global" item use
@@ -490,7 +486,7 @@ public class Main {
         return "Back Hallway";
     }
 
-    //TODO: Implement room 5 - The Back Entrance
+    //This is Room 5 - The Back Entrance
     public static String backEntrance(Scanner in, BackEntrance roomFive, PlayerData player) {
 
         System.out.println(roomFive.getRoomDesc());
@@ -506,11 +502,11 @@ public class Main {
             switch (choice) {
                 case "Forward" -> {
                     if (roomFive.isDoorUnlocked) {
-                        System.out.println("                    The door is unlocked and you step forward...");
+                        System.out.printf("%1$34s||The door is unlocked and you run out into the rain\n", whitespace);
                         return "Game Complete";
                     }
                     else {
-                        System.out.println("                You bump into the door...its cold from the rain outside");
+                        System.out.printf("%1$30s|You bump into the door, it's cool from the pouring rain|\n", whitespace);
                     }
 
                 }
@@ -520,20 +516,15 @@ public class Main {
                     roomFive.interaction(in ,objectInteraction, player);
                 }
                 case "Right" -> {
-                    System.out.println("""
-                                                                There is a hallway...it exists (NYI)
-                            """);
-
+                    System.out.printf("%1$40s|There is a hallway...it exists (NYI)|\n", whitespace);
                 }
                 case "Left" -> {
-                    System.out.println("""
-                                                             There is an umbrella holder in the corner
-                                                     Guess they rather you come in through the back than the front :)
-                            """);
+                    System.out.printf("%1$36s|There is an umbrella holder in the corner|\n", whitespace);
+                    System.out.printf("%1$30s|Guess they rather you come in through the back than the front|\n", whitespace);
 
                 }
                 case "Backward" -> {    //DNT
-                    System.out.println("                    Maybe there was something left unchecked...\n");
+                    System.out.printf("%1$35s|Maybe there was something left unchecked...|\n", whitespace);
                     return "Back Hallway";
                 }
                 //TODO: Inventory interactions (keeping this here now that room 1 is done JUST as a reminder in case I add shit that would require "global" item use

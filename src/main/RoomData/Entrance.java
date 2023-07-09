@@ -18,21 +18,31 @@ public class Entrance {
         return description;
     }
 
-    public void setRoomDesc(boolean rackInteraction, boolean plantInteraction) {
-        if (rackInteraction && !plantInteraction) {
-            formatDescription();
-        }
-        else if (!rackInteraction && plantInteraction) {
-            formatDescription();
-        }
-        else if (rackInteraction && plantInteraction) {
-            formatDescription();
-        }
-    }
+    /**
+     * @see formatDescription()
+     * Method deprecated in favor of one that already has the formatting
+     * (And doesn't rely on passing these 2 due to their global scope)
+     */
+//    public void setRoomDesc(boolean rackInteraction, boolean plantInteraction) {
+//        if (rackInteraction && !plantInteraction) {
+//            formatDescription();
+//        }
+//        else if (!rackInteraction && plantInteraction) {
+//            formatDescription();
+//        }
+//        else if (rackInteraction && plantInteraction) {
+//            formatDescription();
+//        }
+//    }
+    /**
+     * @param object is user-input for whatever item they wanted to interact with
+     * @param Player used for accessing the inventory in order to remove the item
+     */
     public void interaction(String object, PlayerData Player) {
         String str;
 
         //Use system below on other interact-able objects down the line, its simple, though might require more interacted boolean vars :)
+        //WTF are you talking about past MYO ^
         if (object.equalsIgnoreCase("Rack")) {
             if (!rackInteraction) {
                 String desc1 = "You hang your coat on the rack, hearing a loud \"click\" come from further in the house.";
@@ -42,11 +52,9 @@ public class Entrance {
                         %1$12s|%2$s|
                         %1$25s|%3$s|
                         """, whitespace, desc1, desc2);
-
-
                 Player.useItem("Coat");
                 rackInteraction = true;
-                setRoomDesc(rackInteraction, plantInteraction);
+                formatDescription();
             }
             else {
                 String desc1 = "You only came in with one coat";
@@ -63,7 +71,7 @@ public class Entrance {
 
                     Player.addItem("Iron Key");
                     this.plantInteraction = true;
-                    setRoomDesc(rackInteraction, plantInteraction);
+                    formatDescription();
                 }
                 else {
                     String desc1 = "Probably not the best idea to mess with dirt while wet.";

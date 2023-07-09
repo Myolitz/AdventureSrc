@@ -10,11 +10,7 @@ public class FrontHallway extends BaseRoom{
 
     public FrontHallway() {
         name = "Front Hallway";
-        description = """
-                       Going further into the house you are now in a quaint little hallway, adorned with some paintings.
-                        On the opposite wall you see a nice little desk with two drawers and a typewriter on top of it.
-                                          How old must this place be if typewriters are still in use?
-                """;
+        formatDescription();
         this.typeWriterInteraction = false;
         this.drawerInteraction = false;
     }
@@ -22,13 +18,17 @@ public class FrontHallway extends BaseRoom{
     public void interaction(String object, PlayerData player, Scanner in) {
 
         if (object.equalsIgnoreCase("Painting") || object.equalsIgnoreCase("Paintings")) {
-            System.out.println("""
-                                A painting of an empty coat rack and another of a used coat rack...
-                                  Quite the odd choice of art to display, but to each their own
-                """);
+            String desc1 = "A painting of an empty coat rack and another of a populated one";
+            String desc2 = "Quite the odd choice of art to display, but you aren't in a position to judge";
+
+            System.out.printf("""
+                    %1$25s|%2$s|
+                    %1$18s|%3$s|
+                    """, whitespace, desc1, desc2);
         }
         else if (object.equalsIgnoreCase("Drawer")) {
-            System.out.println("It's a drawer like many you've seen before in your everyday life, keyhole and all");
+            String desc1 = "It's a drawer like many you've seen before, keyhole and all";
+            System.out.printf("%1$27s|%2$s|\n", whitespace, desc1);
             String action = in.next();
             if (action.equalsIgnoreCase("Use")) {
                 System.out.println("What item do you want to use?");
@@ -43,30 +43,21 @@ public class FrontHallway extends BaseRoom{
                             String option = in.next();
                             switch (option) {
                                 case "Y" -> {
+                                    String desc2 = "The key fits perfectly in the keyhole, unlocking the mechanism";
                                     player.useItem(item3);
-                                    System.out.println("""
-                                                                The key fits perfectly in the keyhole, unlocking the mechanism.
-                                                                
-                                                                                    You found a [Handle]!
-                                            """);
+                                    System.out.printf("%1$25.5s|%2$s|", whitespace, desc2);
                                     player.addItem("Handle");
                                     drawerInteraction = true;
                                     validChoice = true;
                                 }
                                 case "N" -> {
-                                    System.out.println("""
-                                                                            You stuff the key back in your pockets.
-                                            """);
+                                    System.out.printf("%1$38s|You stuff the key back in your pocket|\n", whitespace);
                                     validChoice = true;
                                 }
                                 default -> System.out.println("That is not an option");
                             }
                         }
 
-                    }
-                    else {
-                        System.out.println("""
-                                        You do not have that item in your inventory!""");
                     }
                 } else {
                     System.out.println("""
@@ -110,10 +101,13 @@ public class FrontHallway extends BaseRoom{
             }
             else if (!player.hasItem("Ink Ribbon") { */
             //Indent later once easter egg implemented TODO put ink ribbon @ room right of exit (name it "Back Corner" or something lol)
-            System.out.println("""
-                                       Quite nostalgic seeing a mint condition type-writer.
-                                                 If only you had an ink ribbon.
-                    """);
+            String desc1 = "Quite nostalgic seeing a mint condition type-writer";
+            String desc2 = "If only you had an ink ribbon";
+
+            System.out.printf("""
+                    %1$33s|%2$s|
+                    %1$45s|%3$s|
+                    """, whitespace, desc1, desc2);
             // }
         }
 
@@ -127,16 +121,55 @@ public class FrontHallway extends BaseRoom{
         return this.name;
     }
 
-    public void setRoomDesc() { //Implement later
-        if (!typeWriterInteraction && drawerInteraction){
-           System.out.println("Option 1");
-        }
-        else if (typeWriterInteraction && !drawerInteraction) {
-            System.out.println("Option 2");
-        }
-        else if (typeWriterInteraction && drawerInteraction) {
-            System.out.println("Option 3");
+    /**
+     * @see Entrance Line 22 or so for comment; same reason here and all other room files.
+     */
+//    public void setRoomDesc() { //Implement later
+//        if (!typeWriterInteraction && drawerInteraction){
+//           System.out.println("Option 1");
+//        }
+//        //Next 2 currently impossible, though will now mention the easter egg
+//        else if (typeWriterInteraction && !drawerInteraction) {
+//            System.out.println("Option 2");
+//        }
+//        else if (typeWriterInteraction && drawerInteraction) {
+//            System.out.println("Option 3");
+//        }
+//    }
+
+    public void formatDescription() {
+        String desc1 = "";
+        String desc2 = "";
+        String desc3 = "";
+        String desc4 = "";
+
+        if (!typeWriterInteraction && drawerInteraction) {
+            desc1 = "Going further into the house you are now in a quaint little hallway, adorned with some paintings.";
+            desc2 = "On the opposite wall you see a nice little desk with two drawers and a typewriter on top of it.";
+            desc3 = "With the drawer now open and empty, you still wonder how old must this place be if typewriters are still in use?";
+
+            this.description = String.format("""
+                    %1$10s|%2$s|
+                    %1$11s|%3$s|
+                    %1$2s|%4$s|
+                    """, whitespace, desc1, desc2, desc3);
+
+        } else if (typeWriterInteraction && !drawerInteraction) {
+            //TODO: write proper descriptions
+            System.out.println("Typewriter == true, drawer == false");
+        } else if (typeWriterInteraction && drawerInteraction) {
+            //TODO: write proper descriptions
+            System.out.println("Typewriter && drawer == false;");
+        } else {
+            desc1 = "Going further into the house you are now in a quaint little hallway, adorned with some paintings.";
+            desc2 = "On the opposite wall you see a nice little desk with two drawers and a typewriter on top of it.";
+            desc3 = "How old must this place be if typewriters are still in use?";
+
+            this.description = String.format("""
+                    %1$10s|%2$s|
+                    %1$11s|%3$s|
+                    %1$28s|%4$s|
+                    """, whitespace, desc1, desc2, desc3);
         }
     }
-
 }

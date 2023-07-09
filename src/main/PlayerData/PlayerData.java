@@ -66,6 +66,9 @@ public class PlayerData {
                 String itemUse = "You used ["+item+"]";
                 System.out.printf("%1$45s|%2$s|\n\n1", whitespace, itemUse);
             }
+            else {
+                System.out.printf("%1$45s|You do not have that item!|", whitespace);
+            }
         }
     }
 
@@ -94,6 +97,9 @@ public class PlayerData {
                 available = true;
                 break;
             }
+        }
+        if (!available) {
+            System.out.printf("%1$45s|You do not have that item!|\n", whitespace);
         }
 
         return available;
