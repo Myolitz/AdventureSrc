@@ -1,4 +1,3 @@
-package main;
 /*
  * Lazy Terminology Key:
  * DNT = DO NOT TOUCH (aka its working as intended)
