@@ -58,7 +58,7 @@ public class Main {
                         menuChoice = 4; //I have 0 idea why, but not having this makes it loop, so yeah. *IT*
                     }
                     case 2 -> { //Gives version. TODO: Manually change this
-                        System.out.println("You are currently on version Alpha 0.6.2 - Text Formatting Galore");
+                        System.out.println("You are currently on version 1.0 - A Straight Path");
                         validChoice = true;
                         userStr = userChoiceStr(input);
                     }
