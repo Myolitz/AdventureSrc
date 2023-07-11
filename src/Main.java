@@ -3,12 +3,12 @@
  * DNT = DO NOT TOUCH (aka its working as intended)
  * NYI = Not yet implemented
  * IT = In Testing
- * PI = Partially Implemented
+ * PI = Partially Implementedsimilar
  * MI = Mostly Implemented (and working as intended)
  * -------------------------------------
  * Ideas for future:
  * player orientation affecting left/right prompts
- * switching to interfaces for movement or something similar
+ * switching to interfaces for movement or something
  * switching the "straight" paths (think front entrance - back entrance) to linked lists
  * -------------------------------------
  * TODO:
@@ -18,7 +18,6 @@
  * Continuation of Main clean-up -> Move the gameplay to its own "game" class or something similar
  * Once you implement the hashsets, fix the logic for deciding player movement.
  * */
-
 
 import main.PlayerData.*;
 import main.RoomData.*;
@@ -323,7 +322,7 @@ public class Main {
                 }
                 case "Left" -> { //DNT
                     System.out.printf("%1$18s|Seeing as the paintings are hung on the wall, walking towards them would yield|\n", whitespace);
-                    System.out.printf("%137$s|nothing but a face-full of wall|\n", whitespace);
+                    System.out.printf("%1$37s|nothing but a face-full of wall|\n", whitespace);
                 }
                 case "Backward" -> {    //DNT
                     System.out.printf("%1$31s|Maybe you missed something in the entrance|\n", whitespace);
