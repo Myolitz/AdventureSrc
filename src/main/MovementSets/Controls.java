@@ -5,6 +5,8 @@ import java.util.HashSet;
 public interface Controls {
 
     public class test extends Dictionaries {
+        //Unsure if this is necessary at all, though interfaces can't inherit so...yeah
+        //Maybe i'll do it the other way around and have Dictionaries extend Controls or something
     }
 
     //TODO: figure out if this is necessary at all
