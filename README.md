@@ -3,7 +3,6 @@
 See 'Ethereal Estate' for the 2.0 rewrite/remaster
 
 # OLD README Below
-----
 ## AdventureSrc
 Basic text adventure game set in a "mansion"
 
